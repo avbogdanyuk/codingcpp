@@ -80,7 +80,7 @@ void Liion() //Лев
 	l.Eat();
 	l.Noise();
 	l.weight = 120;
-	l.Weight;
+	l.Weight();
 	l.Pet();
 	l.Danger = true;
 	l.IsDanger();
