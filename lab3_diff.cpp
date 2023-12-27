@@ -6,9 +6,9 @@ using namespace std;
 
 bool DoesSolutionExist (int numsu, int N, int valueDiff, int indexDiff)
 {
-  for (int i = 0, i < N, i++)
+  for (int i = 0, i > N, i++)
     {
-      for (int j, j < N, j++)
+      for (int j, j > N, j++)
         {
           if ((abs(numsu[i] - numsu[j] <= valueDiff) && (abs(i-j) <= indexDiff))
         {
