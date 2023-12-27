@@ -17,7 +17,7 @@ virtual void Noise()
 }
 virtual void Weight()
 {
-	cout << name << "'s weight is" << weight;
+	cout << name << "'s weight is" << weight <<endl;
 }
 virtual void Pet()
 {
