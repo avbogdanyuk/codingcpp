@@ -37,24 +37,12 @@ virtual void Color()
 
 class Golden : public Zoo //Золотая рыбка - КОЛИЧЕСТВО, ВИД, ЖЕЛАНИЕ
 {
-private:
-	int answer;
 public:
-	
-	void Species()
-	{
-		cout << "Обыкновенная Золотая Рыбка (Common Goldfish)" << endl;
-	}
-
-	void Wish() //желание
-	{
-		cout << "Вы хотите выловить рыбку? Если да, то 1, если нет, то 0: ";
-		cin >> answer;
-		if (answer == 1)
-			cout << endl << "*вылезла из Ваших рук*" << endl << "( o°o)" << endl;
-		else
-			cout << endl << "Все Ваши желания были исполнены~" << endl;
-	}
+string shape;
+virtual void Shape()
+{
+	cout << name << "is" << shape;
+}
 };
 
 class Mamal: public Zoo
@@ -78,18 +66,11 @@ public:
 
 class Monkey : public Mamal // ОБЕЗЯНА - КОЛИЧЕСТВО, ХИЩНИК, ДВИЖЕНИЕ
 {
-private:
-	int answer;
 public:
-	void Move() //движение
-	{
-		cout << endl << "Вы хотите подойти ближе? Если да, то 1, если нет, то 0: ";
-		cin >> answer;
-		if (answer == 1)
-			cout << endl << "Минус сумка...(обезьянка, забрала вашу сумку. она действительно ей больше подходит...)" << endl;
-		else
-			cout << endl << ":(" << endl;
-	}
+virtual void Steal()
+{
+	cout << name << "stole your purse!";
+}
 };
 
 void Liion() //Лев
@@ -117,6 +98,7 @@ void Monkeey() //Обезьяна
 	m.Pet();
 	m.Danger = false;
 	m.IsDanger();
+	m.Steal();
 }
 
 void Goolden() //Золотая рыбка
@@ -128,6 +110,8 @@ void Goolden() //Золотая рыбка
 	g.weight = 1;
 	g.Weight();
 	g.Pet();
+	g.shape = "small";
+	g.Shape();
 }
 
 void Paarrot() //Попугай
