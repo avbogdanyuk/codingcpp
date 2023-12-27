@@ -6,7 +6,7 @@ using namespace std;
 
 bool DoesSolutionExist (int numsu, int N, int valueDiff, int indexDiff)
 {
-  for (i = 0, i < N, i++)
+  for (int i = 0, i < N, i++)
     {
       for (int j, j < N, j++)
         {
