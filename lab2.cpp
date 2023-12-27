@@ -21,7 +21,7 @@ virtual void Weight()
 }
 virtual void Pet()
 {
-	cout <<"you are petting" << name <<"right now";
+	cout <<"you are petting" << name <<"right now" <<endl;
 }
 };
 
@@ -31,7 +31,7 @@ public:
 string color;
 virtual void Color()
 {
-	cout << name << "is" << color;
+	cout << name << "is" << color<<endl;
 }
 };
 
@@ -41,7 +41,7 @@ public:
 string shape;
 virtual void Shape()
 {
-	cout << name << "is" << shape;
+	cout << name << "is" << shape<<endl;
 }
 };
 
@@ -69,7 +69,7 @@ class Monkey : public Mamal // ОБЕЗЯНА - КОЛИЧЕСТВО, ХИЩНИ
 public:
 virtual void Steal()
 {
-	cout << name << "stole your purse!";
+	cout << name << "stole your purse!"<<endl;
 }
 };
 
