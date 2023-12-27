@@ -124,7 +124,7 @@ void Paarrot() //Попугай
 	p.Weight();
 	p.Pet();
 	p.color = "bright blue";
-	p.Color;
+	p.Color();
 }
 
 int main()
