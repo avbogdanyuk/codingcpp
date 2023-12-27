@@ -27,26 +27,12 @@ virtual void Pet()
 
 class Parrot : public Zoo //Попугай - количество, окрас, повтор фразы
 {
-private:
-	int answer;
-	string phrase;
-
 public:
-
-	void Color() //Цвет
-	{
-		cout << "Оливково-зеленый окрас";
-	}
-
-	void Pet()
-	{
-		cout << "Вы хотите погладить попугая? Если да, то 1, если нет, то 0: ";
-		cin >> answer;
-		if (answer == 1)
-			cout << endl << "*он кусает Вас и быстро улетает*" << endl << "( o°o)" << endl;
-		else
-			cout << endl << "Попугай: Крррруто~" << endl;
-	}
+string color;
+virtual void Color()
+{
+	cout << name << "is" << color;
+}
 };
 
 class Golden : public Zoo //Золотая рыбка - КОЛИЧЕСТВО, ВИД, ЖЕЛАНИЕ
@@ -115,6 +101,9 @@ void Liion() //Лев
 	l.weight = 120;
 	l.Weight;
 	l.Pet();
+	l.Danger = true;
+	l.IsDanger();
+	l.Roar();
 }
 
 void Monkeey() //Обезьяна
@@ -126,26 +115,32 @@ void Monkeey() //Обезьяна
 	m.weight = 60;
 	m.Weight();
 	m.Pet();
+	m.Danger = false;
+	m.IsDanger();
 }
 
 void Goolden() //Золотая рыбка
 {
 	Golden g;
-	g.Welcome();
-	g.Species();
-	g.SetAmount(23);
-	g.Print();
-	g.Wish();
+	g.name = "Golden Fish";
+	g.Eat();
+	g.Noise();
+	g.weight = 1;
+	g.Weight();
+	g.Pet();
 }
 
 void Paarrot() //Попугай
 {
 	Parrot p;
-	p.Welcome();
-	p.Color();
-	p.SetAmount(33);
-	p.Print();
+	p.name = "Parrot";
+	p.Eat();
+	p.Noise();
+	p.weight = 5;
+	p.Weight();
 	p.Pet();
+	p.color = "bright blue";
+	p.Color;
 }
 
 int main()
