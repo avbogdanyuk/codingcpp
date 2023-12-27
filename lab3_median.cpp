@@ -18,11 +18,11 @@ public:
     {
         if ((arr.size()) % 2 == 0)
         {
-            cout << (arr[arr.size()/2] + arr[(arr.size()/2)-1])/2;
+            cout << (arr[arr.size()/2] + arr[((arr.size())/2)-1])/2;
         }
         else
         {
-            cout << arr[arr.size()/2]/2;
+            cout << arr[arr.size()/2];
         }
     }
 };
@@ -35,12 +35,19 @@ int main()
     int element;
     
     cout << "Enter elements. If you are done write down 000"<<endl;
-    do
+    
+    cin  >> element;
+    MF. addNum(element);
+    
+    while (element != 000)
     {
         cin >> element;
-        MF.addNum(element);
         
-    } while (element != 000);
+        if (element != 000)
+            MF.addNum(element);
+        
+    }
+
     
     MF.findMedian();
 }
