@@ -19,10 +19,6 @@ virtual void Weight()
 {
 	cout << name << "'s weight is" << weight <<endl;
 }
-virtual void Pet()
-{
-	cout <<"you are petting" << name <<"right now" <<endl;
-}
 };
 
 class Parrot : public Zoo //Попугай - количество, окрас, повтор фразы
@@ -81,7 +77,6 @@ void Liion() //Лев
 	l.Noise();
 	l.weight = 120;
 	l.Weight();
-	l.Pet();
 	l.Danger = true;
 	l.IsDanger();
 	l.Roar();
@@ -95,7 +90,6 @@ void Monkeey() //Обезьяна
 	m.Noise();
 	m.weight = 60;
 	m.Weight();
-	m.Pet();
 	m.Danger = false;
 	m.IsDanger();
 	m.Steal();
@@ -109,7 +103,6 @@ void Goolden() //Золотая рыбка
 	g.Noise();
 	g.weight = 1;
 	g.Weight();
-	g.Pet();
 	g.shape = "small";
 	g.Shape();
 }
@@ -122,7 +115,6 @@ void Paarrot() //Попугай
 	p.Noise();
 	p.weight = 5;
 	p.Weight();
-	p.Pet();
 	p.color = "bright blue";
 	p.Color();
 }
