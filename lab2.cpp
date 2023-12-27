@@ -3,25 +3,26 @@ using namespace std;
 
 class Zoo
 {
-private:
-	string answer;
-	int amount;
 public:
+string name;
+int weight;
 
-	void Welcome() //приветствие
-	{
-		cout << endl << "Животное радо Вас видеть!" << endl;
-	}
-
-	void SetAmount(int a) //количество
-	{
-		amount = a;
-	}
-
-	void Print()
-	{
-		cout << endl << "Всего в зоопарке штук: " << amount << endl;
-	}
+virtual void  Eat()
+{
+ cout << name << "is eating" << endl;
+}
+virtual void Noise()
+{
+	cout << name<< "is making noise" << endl;
+}
+virtual void Weight()
+{
+	cout << name << "'s weight is" << weight;
+}
+virtual void Pet()
+{
+	cout <<"you are petting" << name <<"right now";
+}
 };
 
 class Parrot : public Zoo //Попугай - количество, окрас, повтор фразы
@@ -72,35 +73,21 @@ public:
 
 class Mamal: public Zoo
 {
-private:
-	string predator;
-
 public:
-	void SetPred(string ynpredator) //хищник да или нет
-	{
-		predator = ynpredator;
-	}
-
-	void GetPred()
-	{
-		cout << predator;
-	}
+bool Danger;
+virtual void IsDanger()
+{
+	cout << "Is dangerous" << Danger << endl;
+}
 };
 
 class Lion : public Mamal //ЛЕВ - КОЛИЧЕСТВО, ХИЩНИК, РЫК
 {
-private:
-	int answer;
 public:
-	void Roar() //рык
-	{
-		cout << endl << "Вы хотите подойти ближе? Если да, то 1, если нет, то 0: ";
-		cin >> answer;
-		if (answer == 1)
-			cout << endl << "*свирепое хищное рычание*" << endl << "( o°o)" << endl;
-		else 
-			cout << endl << ":D" << endl;
-	}
+ virtual void Roar()
+{
+ cout << name << "is roaring" << endl;
+}
 };
 
 class Monkey : public Mamal // ОБЕЗЯНА - КОЛИЧЕСТВО, ХИЩНИК, ДВИЖЕНИЕ
@@ -122,23 +109,23 @@ public:
 void Liion() //Лев
 {
 	Lion l;
-	l.Welcome();
-	l.SetPred("Лев - это хищное животное!");
-	l.GetPred();
-	l.SetAmount(5);
-	l.Print();
-	l.Roar();
+	l.name = "Lion";
+	l.Eat();
+	l.Noise();
+	l.weight = 120;
+	l.Weight;
+	l.Pet();
 }
 
 void Monkeey() //Обезьяна
 {
 	Monkey m;
-	m.Welcome();
-	m.SetPred("Обезьяны являются всеядными, представители большинства видов обезьян питаются преимущественно растительной пищей");
-	m.GetPred();
-	m.SetAmount(3);
-	m.Print();
-	m.Move();
+	m.name = "Monkey";
+	m.Eat();
+	m.Noise();
+	m.weight = 60;
+	m.Weight();
+	m.Pet();
 }
 
 void Goolden() //Золотая рыбка
