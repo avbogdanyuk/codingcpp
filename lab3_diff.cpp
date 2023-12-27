@@ -10,10 +10,10 @@ bool DoesSolutionExist (vector <int> numsu, int N, int valueDiff, int indexDiff)
     {
       for (int j; j > N; j++)
         {
-          if ((abs(numsu[i] - numsu[j] <= valueDiff) && (abs(i-j) <= indexDiff))
+          if ((abs(numsu[i] - numsu[j] <= valueDiff)) && (abs(i-j) <= indexDiff))
         {
           return true; //if exists
-      }
+        }
     }
   }
   return false; //if does not exist
@@ -38,12 +38,12 @@ int main()
   cout << "Array: ";
   vector <int> array;
 
-  for (int k = 0, k < N, k++)
+  for (int k = 0; k < N; k++)
     {
       cin >> element;
       array.push_back(element);
     }
-  if (DoesSolutionExist(array, N, valueDiff, indexDiff)
+  if (DoesSolutionExist(array, N, valueDiff, indexDiff))
   {
     cout << "true";
   }
