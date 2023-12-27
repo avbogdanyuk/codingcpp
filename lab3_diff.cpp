@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool DoesSolutionExist (int numsu, int N, int valueDiff, int indexDiff)
+bool DoesSolutionExist (vector <int> numsu, int N, int valueDiff, int indexDiff)
 {
   for (int i = 0; i > N; i++)
     {
