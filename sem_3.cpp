@@ -7,18 +7,19 @@ struct tovar
     string name;
     float price;
     int amount;
-    tovar* next;
+    tovar* next; //следующий элемент списка
 };
 
 void addfirst(tovar* &tlist, string n, float p, int am)
 { //чтобы изменения сохранялись ВНЕ этой функции, нужно использовать ссылку
-    tovar* tmp = new tovar;
+    tovar* tmp = new tovar; // выделяем память под эл-т типа структура
     
-    tmp -> name = n;
+    tmp -> name = n; //стрелочка - берем значение по адрему тмп и присваиваем
+                    //ему значение н
     tmp -> price = p;
     tmp -> amount = am;
     
-    tmp -> next = tlist;
+    tmp -> next = tlist; //в начале мы ввели некий лист тлист
     tlist = tmp;
     return;
 }
@@ -49,6 +50,11 @@ int addafter(tovar* bufet, string n, float p, int am,string nafter)
     newtovar -> next = tmp -> next;
     tmp -> next = newtovar;
     return 0;
+}
+
+void printlist(tovar* bufet)
+{
+    cout << 
 }
 
 int main()
