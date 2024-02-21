@@ -12,7 +12,8 @@ struct tovar
 
 void addfirst(tovar* &tlist, string n, float p, int am)
 { //чтобы изменения сохранялись ВНЕ этой функции, нужно использовать ссылку
-    tovar* tmp = new tovar; // выделяем память под эл-т типа структура
+    tovar* tmp = new tovar; // выделяем память под эл-т типа структура, тмп хранит в себе адрес,
+                            //где находится что-то типа товар(структура)
     
     tmp -> name = n; //стрелочка - берем значение по адрему тмп и присваиваем
                     //ему значение н
@@ -30,8 +31,6 @@ int addafter(tovar* bufet, string n, float p, int am,string nafter)
     //буфет - это список, в начале он является первым элементом списка
     
     tovar* newtovar = new tovar;
-    
-    
     
     //проверяем,что список не пустой
     if (bufet == NULL) return 1;
@@ -54,7 +53,7 @@ int addafter(tovar* bufet, string n, float p, int am,string nafter)
 
 void printlist(tovar* bufet)
 {
-    cout << 
+
 }
 
 int main()
