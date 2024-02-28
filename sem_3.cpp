@@ -51,12 +51,23 @@ int addafter(tovar* bufet, string n, float p, int am,string nafter)
     return 0;
 }
 
-void printlist(tovar* bufet)
-{
-
-}
-
 int main()
 {
-    
+    setlocale(LC_ALL, "RU");
+	
+	tovar *bufet, *tmp;
+	bufet = NULL;
+	for (int i = 0; i < 3; i++)
+	{
+		tmp = new tovar;
+		cout << "Ââåäèòå èìÿ:" << endl << i + 1 << ". ";
+		cin >> tmp -> name;
+		tmp->next = bufet;
+		bufet = tmp;
+	}
+	while (tmp != NULL)
+	{
+		cout << tmp->name << endl;
+		tmp = tmp->next;
+    }
 }
