@@ -48,21 +48,31 @@ int AddAfter(tovar* tlist, string nameafter, string n, double p, int am) //до�
 	return 0;
 }
 
-void AddBefore(tovar* head, tovar* beforeit, tovar* NewTovar) //добавление узла перед заданным
+void AddBefore(tovar* tlist, string namebefore, string n, double p, int am) //добавление узла перед заданным
 {
-	tovar* tmp = head;
+	tovar* NewTovar = new tovar; //указатель на новый узел
 
-	if (head == beforeit) //если тот узел, перед которым мы хотим добавить узел
-						//является головой списка, то используем функций AddFirst
+	NewTovar->name = n; //записываем имя, цену, кол-во нового товара
+	NewTovar->price = p;
+	NewTovar->amount = am;
+	NewTovar->next = NULL; //следующего узла нет
+
+	tovar* tmp = tlist;
+
+	if (tmp->name == namebefore) //если тот узел, перед которым мы хотим добавить узел
+		//является головой списка, то используем функций AddFirst
 	{
-		AddFirst(head, NewTovar);
+		AddFirst(tlist, n, p, am);
 		return;
 	}
 
-	while (tmp && tmp->next != beforeit) //ищем узел, за которым следует beforeit
+	while (tmp != NULL && tmp->name != namebefore) //ищем узел, за которым следует beforeit
+	{
+		if (tmp->next->name == namebefore) //если нашелсся такой узел, добавляем после него новый узел
+			AddAfter(tlist, tmp->name, n, p, am);
 		tmp = tmp->next;
-	if (tmp) //если нашелсся такой узел, добавляем после него новый узел
-		AddAfter(tmp, NewTovar);
+		return;
+	}
 }
 
 void AddLast(tovar*& head, tovar* NewTovar)
@@ -104,7 +114,7 @@ int main()
 
 
 
-	AddAfter(tmp, "poop", 1029.2, 1);
+	AddBefore(tmp, "cookie", "poop", 1029.2, 1);
 
 	while (tmp != NULL) //вывод списка c начала
 	{
