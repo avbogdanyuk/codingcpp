@@ -50,12 +50,12 @@ int AddAfter(tovar* tlist, string nameafter, string n, double p, int am) //до�
 
 void AddBefore(tovar* tlist, string namebefore, string n, double p, int am) //добавление узла перед заданным
 {
-    tovar* tmp = tlist;
+	tovar* tmp = tlist;
 
 	if (tmp->name == namebefore) //если тот узел, перед которым мы хотим добавить узел
 		//является головой списка, то используем функций AddFirst
 	{
-		AddFirst(tmp, n, p, am);
+		AddFirst(tmp, n, p, am); //ПОЧЕМУ НЕ РАБОТАЕТ????
 		return;
 	}
 
@@ -68,18 +68,27 @@ void AddBefore(tovar* tlist, string namebefore, string n, double p, int am) //д
 	}
 }
 
-void AddLast(tovar*& head, tovar* NewTovar)
+void AddLast(tovar* tlist, string n, double p, int am)
 {
-	tovar* tmp;
-
-	tmp = head;
+	tovar* tmp = tlist;
 
 	while (tmp != NULL)
 	{
 		tmp = tmp->next;
-
 		if (tmp->next = NULL);
-		AddAfter(tmp, NewTovar);
+			AddAfter(tlist, tmp->name, n, p, am);
+			return;
+	}
+}
+
+void PrintList(tovar* tlist)
+{
+	while (tlist != NULL) //вывод списка c начала
+	{
+		cout << tlist->name << endl;
+		cout << tlist->price << endl;
+		cout << tlist->amount << endl << "\n";
+		tlist = tlist->next;
 	}
 }
 
@@ -105,15 +114,9 @@ int main()
 		head = tmp;
 	}
 
+	AddLast(tmp, "poop", 1029.2, 1);
 
+	//AddFirst(tmp, "poop", 1029.2, 1);
 
-	AddBefore(tmp, "cookie", "poop", 1029.2, 1);
-
-	while (tmp != NULL) //вывод списка c начала
-	{
-		cout << tmp->name << endl;
-		cout << tmp->price << endl;
-		cout << tmp->amount << endl << "\n";
-		tmp = tmp->next;
-	}
+	PrintList(tmp);
 }
