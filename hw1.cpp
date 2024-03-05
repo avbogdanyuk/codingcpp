@@ -92,14 +92,14 @@ void PrintList(tovar* tlist)
 	}
 }
 
-int DeleteTovar(tovar* tlist, string namedelete)
+void DeleteTovar(tovar* tlist, string namedelete)
 {
 	tovar* tmp = tlist;
 
 	if (tmp->name == namedelete)//если это первый элемент, АЭТОНЕТ!!!
 	{
 		tmp = tmp->next;
-		return 1;
+		return;
 	}
 
 	while (tmp != NULL && tmp->name != namedelete) //это работает!
@@ -107,7 +107,7 @@ int DeleteTovar(tovar* tlist, string namedelete)
 		if (tmp->next->name == namedelete)
 		{
 			tmp->next = tmp->next->next;
-			return 1;
+			return;
 		}
 	}
 }
