@@ -10,29 +10,42 @@ struct tovar
 	tovar* next; //ссылка на след.узел
 };
 
-tovar* CreateTovar(string n, float p, int am) //создание эдемента списка
+void AddFirst(tovar*& tlist, string n, double p, int am)
 {
 	tovar* NewTovar = new tovar; //указатель на новый узел
 
 	NewTovar->name = n; //записываем имя, цену, кол-во нового товара
-	NewTovar->name = p;
-	NewTovar->name = am;
+	NewTovar->price = p;
+	NewTovar->amount = am;
 	NewTovar->next = NULL; //следующего узла нет
 
-	return NewTovar; //результат функции - адрес узла
-}
-//далее требуется добавить узел к списку (с начало, в конец, или в середину)
+	NewTovar->next = tlist; //устанавливаем ссылку узла NewTovar на голову
+	tlist = NewTovar; //NewTovar теперь новая голова списка
 
-void AddFirst(tovar* &head, tovar* NewTovar)
-{
-	NewTovar->next = head; //устанавливаем ссылку узла NewTovar на голову
-	head = NewTovar; //NewTovar теперь новая голова списка
+	return;
 }
 
-void AddAfter(tovar* afterit, tovar* NewTovar) //добавление узла после заданного (afterit)
+int AddAfter(tovar* tlist, string nameafter, string n, double p, int am) //добавление узла после заданного (afterit)
 {
-	NewTovar->next = afterit->next; //устанавливаем ссылку нового узла на узел, следующий за данным
-	afterit->next = NewTovar; //устанавливаем ссылку данного узла afterit на NewTovar
+	tovar* NewTovar = new tovar; //указатель на новый узел
+
+	NewTovar->name = n; //записываем имя, цену, кол-во нового товара
+	NewTovar->price = p;
+	NewTovar->amount = am;
+	NewTovar->next = NULL; //следующего узла нет
+
+	tovar* tmp = tlist;
+
+	while (tmp != NULL && tmp->name != nameafter)
+	{
+		if (tmp->name == nameafter) return 1;
+		tmp = tmp->next;
+	}
+
+	NewTovar->next = tmp->next; //устанавливаем ссылку нового узла на узел, следующий за данным
+	tmp->next = NewTovar; //устанавливаем ссылку данного узла afterit на NewTovar
+
+	return 0;
 }
 
 void AddBefore(tovar* head, tovar* beforeit, tovar* NewTovar) //добавление узла перед заданным
@@ -69,15 +82,15 @@ void AddLast(tovar*& head, tovar* NewTovar)
 
 int main()
 {
-	tovar *tmp, *head;
+	tovar* tmp, * head;
 	head = NULL;
 
-	for (int i = 3; i > 0; i--) //создаем список
+	for (int i = 2; i > 0; i--) //создаем список
 	{
 		tmp = new tovar;
 
 		cout << "Enter the name of new item: " << endl;
-		cin >> tmp-> name;
+		cin >> tmp->name;
 		cout << "Enter the price of new item: " << endl;
 		cin >> tmp->price;
 		cout << "Enter the amount of new item: " << endl;
@@ -88,6 +101,10 @@ int main()
 
 		head = tmp;
 	}
+
+
+
+	AddAfter(tmp, "poop", 1029.2, 1);
 
 	while (tmp != NULL) //вывод списка c начала
 	{
