@@ -92,6 +92,26 @@ void PrintList(tovar* tlist)
 	}
 }
 
+int DeleteTovar(tovar* tlist, string namedelete)
+{
+	tovar* tmp = tlist;
+
+	if (tmp->name == namedelete)//если это первый элемент, АЭТОНЕТ!!!
+	{
+		tmp = tmp->next;
+		return 1;
+	}
+
+	while (tmp != NULL && tmp->name != namedelete) //это работает!
+	{
+		if (tmp->next->name == namedelete)
+		{
+			tmp->next = tmp->next->next;
+			return 1;
+		}
+	}
+}
+
 int main()
 {
 	tovar* tmp, * head;
@@ -114,9 +134,7 @@ int main()
 		head = tmp;
 	}
 
-	AddLast(tmp, "poop", 1029.2, 1);
-
-	//AddFirst(tmp, "poop", 1029.2, 1);
+	DeleteTovar(tmp, "poop");
 
 	PrintList(tmp);
 }
