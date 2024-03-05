@@ -50,19 +50,12 @@ int AddAfter(tovar* tlist, string nameafter, string n, double p, int am) //до�
 
 void AddBefore(tovar* tlist, string namebefore, string n, double p, int am) //добавление узла перед заданным
 {
-	tovar* NewTovar = new tovar; //указатель на новый узел
-
-	NewTovar->name = n; //записываем имя, цену, кол-во нового товара
-	NewTovar->price = p;
-	NewTovar->amount = am;
-	NewTovar->next = NULL; //следующего узла нет
-
-	tovar* tmp = tlist;
+    tovar* tmp = tlist;
 
 	if (tmp->name == namebefore) //если тот узел, перед которым мы хотим добавить узел
 		//является головой списка, то используем функций AddFirst
 	{
-		AddFirst(tlist, n, p, am);
+		AddFirst(tmp, n, p, am);
 		return;
 	}
 
