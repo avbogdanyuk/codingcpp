@@ -57,5 +57,16 @@ void print()
 
 complex complex::operator+(complex &right)
 {
-    
+    complex tmp;
+    tmp.re = re + r.re;
+    tmp.im = im + i.im;
+    return tmp;
+}
+
+complex operator-(complex l, complex r) //внешняя функция
+{
+    complex tmp;
+    tmp.re = l.re - r.re;
+    tmp.im = l.re - r.re;
+    return tmp;
 }
