@@ -165,6 +165,76 @@ int main()
 		    
 		    AddFirst(head, n,p,am);
 	    }
+	    
+	    if (option == 3)
+	    {
+	        string n;
+	        double p;
+	        int am;
+	        string nafter;
+	        
+	        cout << "Enter the name of new item: " << endl;
+		    cin >> n;
+		    cout << "Enter the price of new item: " << endl;
+		    cin >> p;
+		    cout << "Enter the amount of new item: " << endl;
+		    cin >> am;
+		    cout << "\n";
+		    
+		    cout << "After what element's NAME do you want to add?";
+		    cin >> nafter;
+		    
+	        AddAfter(head, nafter, n,p,am);
+	    }
+	    
+	    if (option == 4)
+	    {
+	        string n;
+	        double p;
+	        int am;
+	        string nbefore;
+	        
+	        cout << "Enter the name of new item: " << endl;
+		    cin >> n;
+		    cout << "Enter the price of new item: " << endl;
+		    cin >> p;
+		    cout << "Enter the amount of new item: " << endl;
+		    cin >> am;
+		    cout << "\n";
+		    
+		    cout << "Before what element's NAME do you want to add?";
+		    cin >> nbefore;
+		    
+	        AddBefore(head, nbefore, n,p,am);
+	    }
+	    
+	    if (option == 5)
+	    {
+	        string n;
+	        double p;
+	        int am;
+	        
+	        cout << "Enter the name of new item: " << endl;
+		    cin >> n;
+		    cout << "Enter the price of new item: " << endl;
+		    cin >> p;
+		    cout << "Enter the amount of new item: " << endl;
+		    cin >> am;
+		    cout << "\n";
+		    
+	        AddLast(head, n,p,am);
+	    }
+	    
+	    if (option == 6)
+	    {
+	        string n;
+	        
+	        cout << "Enter the name of item you want to delete: " << endl;
+		    cin >> n;
+		    cout << "\n";
+		    
+	        DeleteTovar(head, n);
+	    }
     }
 
 	PrintList(head);
