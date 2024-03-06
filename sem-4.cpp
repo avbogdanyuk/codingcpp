@@ -1,8 +1,9 @@
 //x=a+ib comlex numbers, a - действительная re, b -мнимая im
 
 #include <iostream>
+using namespace std;
 
-class Complex
+class complex
 {
     public:
     double re; double im;
@@ -19,7 +20,7 @@ class Complex
         im = i;
     }
     
-    comlex(comlex &x); //задача этого конструктора создать копию, полное определение будет ВНЕ класса
+    complex(complex &x); //задача этого конструктора создать копию, полное определение будет ВНЕ класса
     
     ~complex(){};//диструктор
     
@@ -35,7 +36,7 @@ class Complex
 complex::complex(complex &x) //это адрес, но используем как переменную. копируем значения действ.и мнимой частей из компл.числа х
 {
     re = x.re;
-    im = x.im
+    im = x.im;
 }
 
 void complex::set(double r, double i) //присваиваем новые значения
@@ -44,16 +45,16 @@ void complex::set(double r, double i) //присваиваем новые зна
     im = i;
 }
 
-void print()
+void complex::print()
 {
-    
+    cout << re << im;
 }
 
 complex complex::operator+(complex &right) //то же, что и разность, только сумма
 {
     complex tmp;
-    tmp.re = re + r.re;
-    tmp.im = im + i.im;
+    tmp.re = re + right.re;
+    tmp.im = im + right.im;
     return tmp;
 }
 
@@ -63,4 +64,12 @@ complex operator-(complex l, complex r) //внешняя функция, для 
     tmp.re = l.re - r.re; //разность действительных частей
     tmp.im = l.re - r.re; //разность мнимых частей
     return tmp;
+}
+
+int main()
+{
+    complex c;
+    
+    c.print();
+    
 }
