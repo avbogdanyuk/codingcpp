@@ -117,7 +117,7 @@ int main()
 {
 	tovar* tmp, * head;
 	head = NULL;
-	int option;
+	int option = 0;
 	
     while (option != 7)
     {
@@ -167,5 +167,5 @@ int main()
 	    }
     }
 
-	PrintList(tmp);
+	PrintList(head);
 }
