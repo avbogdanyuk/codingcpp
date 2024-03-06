@@ -32,19 +32,13 @@ class Complex
     complex operator+(complex &right);//правый операнд
 };
 
-complex::complex()//определяем конструктор, функция комплекс из класса комплекс
-{
-    re = r;
-    im = i;
-}
-
-complex::complex(complex &x) //это адрес, но используем как переменную
+complex::complex(complex &x) //это адрес, но используем как переменную. копируем значения действ.и мнимой частей из компл.числа х
 {
     re = x.re;
     im = x.im
 }
 
-void complex::set(double r, double i)
+void complex::set(double r, double i) //присваиваем новые значения
 {
     re = r;
     im = i;
@@ -55,7 +49,7 @@ void print()
     
 }
 
-complex complex::operator+(complex &right)
+complex complex::operator+(complex &right) //то же, что и разность, только сумма
 {
     complex tmp;
     tmp.re = re + r.re;
@@ -63,10 +57,10 @@ complex complex::operator+(complex &right)
     return tmp;
 }
 
-complex operator-(complex l, complex r) //внешняя функция
+complex operator-(complex l, complex r) //внешняя функция, для вычисления разности
 {
     complex tmp;
-    tmp.re = l.re - r.re;
-    tmp.im = l.re - r.re;
+    tmp.re = l.re - r.re; //разность действительных частей
+    tmp.im = l.re - r.re; //разность мнимых частей
     return tmp;
 }
