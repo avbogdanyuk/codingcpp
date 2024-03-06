@@ -98,7 +98,8 @@ void DeleteTovar(tovar* tlist, string namedelete)
 
 	if (tmp->name == namedelete)//если это первый элемент, АЭТОНЕТ!!!
 	{
-		tmp = tmp->next;
+		tlist = tmp->next;
+		delete tmp;
 		return;
 	}
 
