@@ -117,25 +117,55 @@ int main()
 {
 	tovar* tmp, * head;
 	head = NULL;
+	int option;
+	
+    while (option != 7)
+    {
+        cout << "Choose option: \n 1)Create list\n2)Add first\n3)Add after\n4)Add before\n5)Add last\n6)Delete element\n7)End\n";
+	    cin >> option;
+	
+	    if (option == 1)
+	    {
+	        int number;
+	    
+	        cout << "How many element do you want to add?";
+	        cin >> number;
+	    
+	        for (number; number > 0; number--) //создаем список
+	        {
+		        tmp = new tovar;
 
-	for (int i = 2; i > 0; i--) //создаем список
-	{
-		tmp = new tovar;
+		        cout << "Enter the name of new item: " << endl;
+		        cin >> tmp->name;
+		        cout << "Enter the price of new item: " << endl;
+		        cin >> tmp->price;
+		        cout << "Enter the amount of new item: " << endl;
+		        cin >> tmp->amount;
+		        cout << "\n";
 
-		cout << "Enter the name of new item: " << endl;
-		cin >> tmp->name;
-		cout << "Enter the price of new item: " << endl;
-		cin >> tmp->price;
-		cout << "Enter the amount of new item: " << endl;
-		cin >> tmp->amount;
-		cout << "\n";
+		        tmp->next = head;
 
-		tmp->next = head;
-
-		head = tmp;
-	}
-
-	DeleteTovar(tmp, "poop");
+		        head = tmp;
+	        }
+	    }
+	    
+	    if (option == 2)
+	    {
+	        string n;
+	        double p;
+	        int am;
+	        
+	        cout << "Enter the name of new item: " << endl;
+		    cin >> n;
+		    cout << "Enter the price of new item: " << endl;
+		    cin >> p;
+		    cout << "Enter the amount of new item: " << endl;
+		    cin >> am;
+		    cout << "\n";
+		    
+		    AddFirst(head, n,p,am);
+	    }
+    }
 
 	PrintList(tmp);
 }
