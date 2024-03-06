@@ -23,11 +23,39 @@ class Complex
     
     ~complex(){};//диструктор
     
-    void set(double x, double y)//установление значения комплексного числа
+    void set(double, double);//установление значения комплексного числа(double x, double y)
     
     void print(); //вывод комп.числа
     
     //оператор функции
     //компонентная функция класса
+    complex operator+(complex &right);//правый операнд
+};
+
+complex::complex()//определяем конструктор, функция комплекс из класса комплекс
+{
+    re = r;
+    im = i;
+}
+
+complex::complex(complex &x) //это адрес, но используем как переменную
+{
+    re = x.re;
+    im = x.im
+}
+
+void complex::set(double r, double i)
+{
+    re = r;
+    im = i;
+}
+
+void print()
+{
+    
+}
+
+complex complex::operator+(complex &right)
+{
     
 }
