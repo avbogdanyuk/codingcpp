@@ -56,3 +56,17 @@ vect::vect(vect &x)
         v[i] = x.v[i];
     }
 }
+
+vect &vect::operator=(const vect &r)
+{
+    if (dim == 0)
+    {
+        dim = r.dim;
+        v = new double[dim];
+    }
+    for (int i=0; i<dim; i++)
+    {
+        v[i] = r.v[i];
+    }
+    return *this;
+}
