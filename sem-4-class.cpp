@@ -68,10 +68,15 @@ complex operator-(complex l, complex r) //внешняя функция, для 
 
 int main()
 {
-    complex c;
+    complex aa = complex(); //using contsructor. inizialization
+    cout << aa.re << endl << aa.im << endl;
     
-    c.print();
-    //c.set(1,1);
-    complex aa = complex(2,3);
-    cout << aa.re;
+    aa.set(232,1);
+    aa.print();
+    
+    complex second = complex(1, 2.1);
+    second.print();
+    
+    second = complex(aa); //copying
+    second.print();
 }
