@@ -47,7 +47,7 @@ void complex::set(double r, double i) //присваиваем новые зна
 
 void complex::print()
 {
-    cout << "real = " << re << "\nimaginary = " << im << endl; //it prints, for sure
+    cout << endl << "real = " << re << "\nimaginary = " << im << endl; //it prints, for sure
 }
 
 complex complex::operator+(complex &right) //то же, что и разность, только сумма
@@ -62,7 +62,7 @@ complex operator-(complex l, complex r) //внешняя функция, для 
 {
     complex tmp;
     tmp.re = l.re - r.re; //разность действительных частей
-    tmp.im = l.re - r.re; //разность мнимых частей
+    tmp.im = l.im - r.im; //разность мнимых частей
     return tmp;
 }
 
@@ -77,6 +77,12 @@ int main()
     complex second = complex(1, 2.1);
     second.print();
     
-    second = complex(aa); //copying
-    second.print();
+    //second = complex(aa); //copying
+    //second.print();
+    
+    complex c3 = aa - second; //minus
+    c3.print();
+    
+    complex c4 = aa + second;
+    c4.print();
 }
