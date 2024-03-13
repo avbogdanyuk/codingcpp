@@ -71,7 +71,7 @@ int main()
     complex c;
     
     c.print();
-    c.set(1,1);
-    c.print();
-    
+    //c.set(1,1);
+    complex aa = complex(2,3);
+    cout << aa.re;
 }
