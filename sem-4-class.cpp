@@ -6,9 +6,9 @@ using namespace std;
 class complex
 {
     public:
-    double re; double im;
+    double re; double im; //polya
     
-    complex() //конструктор, поэтому название просто название класса. Если (), то функция.
+    complex() //methods, конструктор, поэтому название просто название класса. Если (), то функция.
     {
         re = 0;
         im = 0;
