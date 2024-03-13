@@ -24,7 +24,7 @@ class complex
     
     ~complex(){};//диструктор
     
-    void set(double, double);//установление значения комплексного числа(double x, double y)
+    void set(double, double);//установление значения комплексного числа(double r, double i)
     
     void print(); //вывод комп.числа
     
@@ -47,7 +47,7 @@ void complex::set(double r, double i) //присваиваем новые зна
 
 void complex::print()
 {
-    cout << re << im;
+    cout << "real = " << re << "\nimaginary = " << im << endl; //it prints, for sure
 }
 
 complex complex::operator+(complex &right) //то же, что и разность, только сумма
@@ -70,6 +70,8 @@ int main()
 {
     complex c;
     
+    c.print();
+    c.set(1,1);
     c.print();
     
 }
