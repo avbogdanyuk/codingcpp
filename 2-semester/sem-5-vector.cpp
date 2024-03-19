@@ -3,33 +3,33 @@ using namespace std;
 
 class vect
 {
-    int dim; //razmernost vectora
-    double* v; //components of class, massive that containt amount of components
-    int num; //nomer vectora
-    
-    public:
-    static int count; //amount of created vectors
-    
-    //methods
-    
-    //constractors
+    int dim; //размерность вектора
+    double* v; //компоненты класса, массив содержит количество компонентов
+    int num; //номер вектора
+
+public:
+    static int count; //количество созданных векторов
+
+    //Методы
+
+    //конструкторы
     vect();
-    vect(int d); //d - razmernost vectora, nulevoy vector
-    vect(int d, double* x); //x contains component of vector
-    vect(vect &x); //constactor of copying
-    
-    //distractor
+    vect(int d); //d - размерность векторы, нулевой вектор
+    vect(int d, double* x); //x содержит компоненты вектора
+    vect(vect& x); //конструктор копирования
+
+    //диструктор
     ~vect();
-    
-    //basic... methods of the class
+
+    //обычные методы класса
     void print();
-    vect &operator+(vect &right); //component function of class, left opertor is known...i suppose
-    //make a function a friend of class
+    vect& operator+(vect& right); //компонентная функция класса, левый операнд известен
+    //создаем функцию ДРУГ КЛАССА
     friend vect operator-(vect l, vect r);
-    vect &operator=(const vect &r);
+    vect& operator=(const vect& r);
 };
 
-int vect::count = 0; //necessary!!!
+int vect::count = 0; //НЕОБХОДИМО!
 
 vect::vect(int d)
 {
@@ -38,33 +38,33 @@ vect::vect(int d)
     cout << "Konstruktor vect(int d) sozdal vector N" << num;
     dim = d;
     v = new double[dim];
-    for (int i=0; i<dim; i++)
+    for (int i = 0; i < dim; i++)
     {
         v[i] = 0;
     }
 }
 
-vect::vect(vect &x)
+vect::vect(vect& x)
 {
     count++; //count = count + 1
     num = count;
     cout << "Konstruktor vect(int d) sozdal vector N" << num;
     dim = x.dim;
     v = new double[dim];
-    for (int i=0; i<dim; i++)
+    for (int i = 0; i < dim; i++)
     {
         v[i] = x.v[i];
     }
 }
 
-vect &vect::operator=(const vect &r)
+vect& vect::operator=(const vect& r)
 {
     if (dim == 0)
     {
         dim = r.dim;
         v = new double[dim];
     }
-    for (int i=0; i<dim; i++)
+    for (int i = 0; i < dim; i++)
     {
         v[i] = r.v[i];
     }
