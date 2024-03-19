@@ -35,7 +35,7 @@ vect::vect(int d)
 {
     count++; //count = count + 1
     num = count;
-    cout << "Konstruktor vect(int d) sozdal vector N" << num;
+    cout << "Конструктор vect(int d) создал вектор N" << num;
     dim = d;
     v = new double[dim];
     for (int i = 0; i < dim; i++)
@@ -48,7 +48,7 @@ vect::vect(vect& x)
 {
     count++; //count = count + 1
     num = count;
-    cout << "Konstruktor vect(int d) sozdal vector N" << num;
+    cout << "Конструктор vect(int d) создал вектор N" << num;
     dim = x.dim;
     v = new double[dim];
     for (int i = 0; i < dim; i++)
