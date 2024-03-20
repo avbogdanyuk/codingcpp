@@ -81,9 +81,16 @@ vect::vect(vect& x)
 
 void vect::print()
 {
-    cout << dim;
-    cout << v;
-    cout << num;
+    cout << "Размерность " << dim << endl;
+    cout << "Адрес вектора " << v << endl;
+    cout << "Номер вектора" << num << endl;
+    
+    if (dim == 0) cout << "No elements";
+    
+    for (int i=0; i<dim; i++)
+    {
+        cout << v[i];
+    }
 }
 
 vect vect::operator=(const vect& r)
@@ -119,4 +126,7 @@ int main()
 {
     vect v;
     vect l;
+    l.print();
+    
+    
 }
