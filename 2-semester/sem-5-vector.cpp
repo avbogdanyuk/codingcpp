@@ -124,10 +124,12 @@ vect vect::operator+(vect& r)
 
 int main()
 {
-    vect v;
+    vect v(3);
     v.print();
-    vect l;
+    
+    vect l(v);
     l.print();
-    vect r = v;
+    
+    vect r = l;
     r.print();
 }
