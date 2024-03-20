@@ -55,15 +55,7 @@ vect::vect(int d)
 
 vect::vect(int d, double* x)
 {
-    count++;
-    num = count;
-    cout << "\nКонструктор vect(int d, double* x) создал вектор N " << num << endl;
-    dim = d;
-    v = x;
-    for (int i = 0; i < dim; i++)
-    {
-        v[i] = 0;
-    }
+    
 }
 
 vect::vect(vect& x)
@@ -109,17 +101,7 @@ vect vect::operator=(const vect& r)
 
 vect vect::operator+(vect& r)
 {
-    if (dim != r.dim) //если кол-во элементов в левом векторе не равно кол-ву эл. в правом, то мы не можем продолжать(
-    {
-        count++;
-        num=count;
-        v = new double[dim];
-        for (int i=0; i<dim; i++)
-        {
-            v[i] = v[i] + r.v[i];   
-        }
-    }
-    return 0;
+    
 }
 
 int main()
@@ -130,6 +112,4 @@ int main()
     vect l(v);
     l.print();
     
-    vect r = l;
-    r.print();
 }
