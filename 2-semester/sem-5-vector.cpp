@@ -33,8 +33,11 @@ int vect::count = 0; //НЕОБХОДИМО!
 
 vect::vect()
 {
-    dim = 0;
     num = 0;
+    dim = 0;
+    v = new double[dim];
+    num = 0;
+    cout << "Конструктор vect() создал вектор N" << num;
 }
 
 vect::vect(int d)
@@ -50,17 +53,31 @@ vect::vect(int d)
     }
 }
 
+vect::vect(int d, double* x)
+{
+    count++;
+    num = count;
+    cout << "Конструктор vect(int d, double* x) создал вектор N" << num;
+    dim = d;
+    v = 
+}
+
 vect::vect(vect& x)
 {
     count++; //count = count + 1
     num = count;
-    cout << "Конструктор vect(int d) создал вектор N" << num;
+    cout << "Конструктор vect(vect& x) создал вектор N" << num;
     dim = x.dim; //razmernost' odinakova teper'
     v = new double[dim]; //vidilyaem pamyat' pod massive sostoyashoy iz dim amount of double elements
     for (int i = 0; i < dim; i++)
     {
         v[i] = x.v[i]; //copying elements step by step
     }
+}
+
+void print()
+{
+    
 }
 
 vect& vect::operator=(const vect& r)
