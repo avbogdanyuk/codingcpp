@@ -59,7 +59,11 @@ vect::vect(int d, double* x)
     num = count;
     cout << "Конструктор vect(int d, double* x) создал вектор N" << num;
     dim = d;
-    v = 
+    v = x;
+    for (int i = 0; i < dim; i++)
+    {
+        v[i] = 0;
+    }
 }
 
 vect::vect(vect& x)
@@ -75,9 +79,11 @@ vect::vect(vect& x)
     }
 }
 
-void print()
+void vect::print()
 {
-    
+    cout << dim;
+    cout << v;
+    cout << num;
 }
 
 vect& vect::operator=(const vect& r)
@@ -93,3 +99,5 @@ vect& vect::operator=(const vect& r)
     }
     return *this;
 }
+
+vect& vect::operator+(vect& right)
