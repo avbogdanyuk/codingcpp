@@ -33,10 +33,10 @@ int vect::count = 0; //НЕОБХОДИМО!
 
 vect::vect()
 {
-    num = 0;
+    count++;
+    num = count;
     dim = 0;
     v = new double[dim];
-    num = 0;
     cout << "Конструктор vect() создал вектор N " << num;
 }
 
