@@ -101,7 +101,9 @@ vect vect::operator=(const vect& r)
 
 vect vect::operator+(vect& r)
 {
-    
+    vect tmp;
+    tmp.dim = dim + r.dim;
+    return tmp;
 }
 
 int main()
@@ -112,4 +114,6 @@ int main()
     vect l(v);
     l.print();
     
+    vect r = v + l;
+    r.print();
 }
