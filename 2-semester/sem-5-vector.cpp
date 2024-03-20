@@ -4,7 +4,7 @@ using namespace std;
 class vect
 {
     int dim; //размерность вектора
-    double* v; //компоненты класса, массив содержит количество компонентов
+    double* v; //компоненты класса, массив содержит количество компонентов, pointer
     int num; //номер вектора
 
 public:
@@ -31,6 +31,12 @@ public:
 
 int vect::count = 0; //НЕОБХОДИМО!
 
+vect::vect()
+{
+    dim = 0;
+    num = 0;
+}
+
 vect::vect(int d)
 {
     count++; //count = count + 1
@@ -49,11 +55,11 @@ vect::vect(vect& x)
     count++; //count = count + 1
     num = count;
     cout << "Конструктор vect(int d) создал вектор N" << num;
-    dim = x.dim;
-    v = new double[dim];
+    dim = x.dim; //razmernost' odinakova teper'
+    v = new double[dim]; //vidilyaem pamyat' pod massive sostoyashoy iz dim amount of double elements
     for (int i = 0; i < dim; i++)
     {
-        v[i] = x.v[i];
+        v[i] = x.v[i]; //copying elements step by step
     }
 }
 
