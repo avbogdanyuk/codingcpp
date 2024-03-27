@@ -10,7 +10,7 @@ class vect
 public:
     static int count; //количество созданных векторов
 
-    //Методы
+//Методы
 
     //конструкторы
     vect();
@@ -27,6 +27,9 @@ public:
     //создаем функцию ДРУГ КЛАССА
     friend vect operator-(vect l, vect r);
     vect operator=(const vect& r);
+    vect operator-();//uno uno
+    double operator*(vect& r); //skalyarnoe proizvedenie
+    friend vect operator*(double k, vect& r);
 };
 
 int vect::count = 0; //НЕОБХОДИМО!
