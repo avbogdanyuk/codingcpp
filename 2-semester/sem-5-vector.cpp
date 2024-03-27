@@ -10,16 +10,16 @@ class vect
 public:
     static int count; //количество созданных векторов
 
-//Методы
+    //Методы
 
-    //конструкторы
+        //конструкторы
     vect();
     vect(int d); //d - размерность векторы, нулевой вектор
-    vect(int d, double* x); //x содержит компоненты вектора
+    //vect(int d, double* x); //x содержит компоненты вектора
     vect(vect& x); //конструктор копирования
 
     //диструктор
-    ~vect(){};
+    ~vect() {};
 
     //обычные методы класса
     void print();
@@ -28,8 +28,8 @@ public:
     friend vect operator-(vect l, vect r);
     vect operator=(const vect& r);
     vect operator-();//uno uno
-    double operator*(vect& r); //skalyarnoe proizvedenie
-    friend vect operator*(double k, vect& r);
+    //double operator*(vect& r); //skalyarnoe proizvedenie
+    //friend vect operator*(double k, vect& r);
 };
 
 int vect::count = 0; //НЕОБХОДИМО!
@@ -60,9 +60,9 @@ vect::vect(vect& x)
 {
     count++; //count = count + 1
     num = count;
-    cout << "\nКонструктор vect(vect& x) создал вектор N " << num << endl;
-    dim = x.dim; //razmernost' odinakova teper'
-    v = new double[dim]; //vidilyaem pamyat' pod massive sostoyashoy iz dim amount of double elements
+    cout << "\nКонструктор vect(vect& x) копирования " << num << endl;
+    dim = x.dim; //размерность теперь одинаковая
+    v = new double[dim]; //выделяем память под массив, состоящий из dim кол-ва double элементов
     for (int i = 0; i < dim; i++)
     {
         v[i] = x.v[i]; //copying elements step by step
@@ -71,13 +71,9 @@ vect::vect(vect& x)
 
 void vect::print()
 {
-    cout << "Размерность " << dim << endl;
-    cout << "Адрес вектора " << v << endl;
-    cout << "Номер вектора " << num << endl;
-    
     if (dim == 0) cout << "No elements";
-    
-    for (int i=0; i<dim; i++)
+
+    for (int i = 0; i < dim; i++)
     {
         cout << v[i];
     }
@@ -94,15 +90,18 @@ vect vect::operator=(const vect& r)
     {
         v[i] = r.v[i];
     }
+    cout << "\nПрисваивание значений вектору N " << num << endl;
+
     return *this;
 }
 
 vect vect::operator+(vect& r)
 {
+    cout << "\nСоздаем новый вектор N " << num << endl;
     vect tmp(dim);
-    for (int i=0;i<dim;i++)
+    for (int i = 0; i < dim; i++)
     {
-        tmp.v[i]=v[i] + r.v[i];
+        tmp.v[i] = v[i] + r.v[i];
     }
     return tmp;
 }
@@ -110,21 +109,37 @@ vect vect::operator+(vect& r)
 vect operator-(vect l, vect r)
 {
     vect tmp(l.dim);
-    for (int i=0;i<l.dim;i++)
+    for (int i = 0; i < l.dim; i++)
     {
-        tmp.v[i]=l.v[i] - r.v[i];
+        tmp.v[i] = l.v[i] - r.v[i];
     }
     return tmp;
 }
 
+vect vect::operator-()
+{
+    for (int i = 0; i < dim; i++)
+    {
+        v[i] = -v[i];
+    }
+    return *this;
+}
+
 int main()
 {
-    vect v(3);
-    v.print();
-    
-    vect l(v);
+    setlocale(LC_ALL, "Russian");
+
+    vect l(3); //vect(int d)
     l.print();
-    
-    vect r = v - l;
+
+    vect r = l; //копирование
     r.print();
+
+    vect sum = r+l;
+    sum.print();
+
+    vect diff = r-l;
+    diff.print();
+    
+    (-sum).print();
 }
