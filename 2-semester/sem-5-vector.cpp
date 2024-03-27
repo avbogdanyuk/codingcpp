@@ -167,10 +167,12 @@ int main()
     vect r = l; //копирование
     r.print();
 
-    vect sum = r+l;
+	vect sum;
+    sum = r+l;
     sum.print();
 
-    vect diff = r-l;
+    vect diff;
+    diff = r-l;
     diff.print();
     
     (-sum).print();
