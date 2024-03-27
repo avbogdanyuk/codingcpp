@@ -28,7 +28,7 @@ public:
     friend vect operator-(vect l, vect r);
     vect operator=(const vect& r);
     vect operator-();//uno uno
-    //double operator*(vect& r); //skalyarnoe proizvedenie
+    double operator*(vect& r); //скалярное произведение
     //friend vect operator*(double k, vect& r);
 };
 
@@ -71,6 +71,7 @@ vect::vect(vect& x)
 
 void vect::print()
 {
+    cout << "\nВывод вектора на экран" << endl;
     if (dim == 0) cout << "No elements";
 
     for (int i = 0; i < dim; i++)
@@ -108,6 +109,7 @@ vect vect::operator+(vect& r)
 
 vect operator-(vect l, vect r)
 {
+    cout << "\nОператор вычитания" << endl;
     vect tmp(l.dim);
     for (int i = 0; i < l.dim; i++)
     {
@@ -118,11 +120,28 @@ vect operator-(vect l, vect r)
 
 vect vect::operator-()
 {
+    cout << "\nОператор унарного вычитания" << endl;
     for (int i = 0; i < dim; i++)
     {
         v[i] = -v[i];
     }
     return *this;
+}
+
+double vect::operator*(vect& r)//скалярное произведение
+{
+    double dotprod = 0;
+    
+    cout << "\nОператор вычисления скалярного произведения" << endl;
+    
+    if (dim == r.dim)
+    {
+        for (int i=0; i<dim; i++)
+        {
+            dotprod += v[i]*r.v[i];
+        }
+    }
+    return dotprod;
 }
 
 int main()
@@ -142,4 +161,6 @@ int main()
     diff.print();
     
     (-sum).print();
+    
+    cout << endl << l*sum;
 }
