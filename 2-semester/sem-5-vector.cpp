@@ -59,6 +59,19 @@ vect::vect(int d)
     }
 }
 
+vect::vect(int d, double* x)
+{
+    count++; //count = count + 1
+    num = count;
+    cout << "\nКонструктор vect(int d) создал вектор N " << num << endl;
+    dim = d;
+    v = new double[dim];
+    for (int i = 0; i < dim; i++)
+    {
+        v[i] = x[i];
+    }
+}
+
 vect::vect(vect& x)
 {
     count++; //count = count + 1
@@ -180,4 +193,12 @@ int main()
     cout << endl << l*sum;
     
     (4*sum).print();
+    
+    double* mess = new double[3];
+    mess[0] = 1;
+    mess[1] = 234;
+    mess[2] = 12.2;
+    
+    vect messy(3, mess);
+    messy.print();
 }
