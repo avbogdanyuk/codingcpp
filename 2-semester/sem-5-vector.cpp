@@ -25,7 +25,7 @@ public:
     void print();
     vect operator+(vect& r); //компонентная функция класса, левый операнд известен
     //создаем функцию ДРУГ КЛАССА
-    //friend vect operator-(vect l, vect r);
+    friend vect operator-(vect l, vect r);
     vect operator=(const vect& r);
 };
 
@@ -49,13 +49,8 @@ vect::vect(int d)
     v = new double[dim];
     for (int i = 0; i < dim; i++)
     {
-        v[i] = 0;
+        v[i] = 1;
     }
-}
-
-vect::vect(int d, double* x)
-{
-    
 }
 
 vect::vect(vect& x)
@@ -101,8 +96,21 @@ vect vect::operator=(const vect& r)
 
 vect vect::operator+(vect& r)
 {
-    vect tmp;
-    tmp.dim = dim + r.dim;
+    vect tmp(dim);
+    for (int i=0;i<dim;i++)
+    {
+        tmp.v[i]=v[i] + r.v[i];
+    }
+    return tmp;
+}
+
+vect operator-(vect l, vect r)
+{
+    vect tmp(l.dim);
+    for (int i=0;i<l.dim;i++)
+    {
+        tmp.v[i]=l.v[i] - r.v[i];
+    }
     return tmp;
 }
 
@@ -114,6 +122,6 @@ int main()
     vect l(v);
     l.print();
     
-    vect r = v + l;
+    vect r = v - l;
     r.print();
 }
