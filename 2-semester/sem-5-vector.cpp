@@ -29,7 +29,7 @@ public:
     vect operator=(const vect& r);
     vect operator-();//uno uno
     double operator*(vect& r); //скалярное произведение
-    //friend vect operator*(double k, vect& r);
+    friend vect operator*(double k, vect& r);
 };
 
 int vect::count = 0; //НЕОБХОДИМО!
@@ -144,6 +144,16 @@ double vect::operator*(vect& r)//скалярное произведение
     return dotprod;
 }
 
+vect operator*(double k, vect& r)
+{
+    cout << "\nОператор умножения на константу" << endl;
+    for (int i=0; i<r.dim; i++)
+    {
+        r.v[i] = k*r.v[i];
+    }
+    return r;
+}
+
 int main()
 {
     setlocale(LC_ALL, "Russian");
@@ -163,4 +173,6 @@ int main()
     (-sum).print();
     
     cout << endl << l*sum;
+    
+    (4*sum).print();
 }
