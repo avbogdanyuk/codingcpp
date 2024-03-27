@@ -26,6 +26,30 @@ class matr //kvadratnaya matrix
     vect operator*(vect& r); //umnozhenie matrix na vector
 };
 
+int index(int n, int i, int j)
+{
+    return n*(i-1)+j-1;
+}
+
+matr::matr()
+{
+    dim = 0;
+    a = new double[dim];
+}
+
+matr::matr(matr& x)
+{
+    matr tmp;
+    tmp.dim = x.dim;
+    tmp.a = new double[dim];
+    for (int i=1; i<=dim; i++)
+    for (int j=1; j<=dim; j++)
+    {
+        tmp.a[index(dim, i, j)] = x.a[index(dim, i, j)];
+    }
+    return tmp;
+}
+
 matr matr::operator*(matr& r)
 {
     matr tmp(this->dim); //prosto berem razmernost' left operand, po prikolu
@@ -33,10 +57,11 @@ matr matr::operator*(matr& r)
     for (int i=1; i<=dim; i++)
     for (int j=1; j<=dim; j++)
     {
-        tmp.a[ind(dim, i, j)] = 0;
+        tmp.a[index(dim, i, j)] = 0;
         for (int k=1; k<=dim; k++)
         {
-            tmp.a[ind(dim, i, j)] += a[ind(dim, i, k)]*r.a[ind(dim, k, j)]
+            tmp.a[index(dim, i, j)] += a[index(dim, i, k)]*r.a[index(dim, k, j)];
         }
     }
+    return tmp;
 }
