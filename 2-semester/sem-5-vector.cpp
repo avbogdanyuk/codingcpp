@@ -63,7 +63,7 @@ vect::vect(int d, double* x)
 {
     count++; //count = count + 1
     num = count;
-    cout << "\nКонструктор vect(int d) создал вектор N " << num << endl;
+    cout << "\nКонструктор vect(int d, double* x) создал вектор N " << num << endl;
     dim = d;
     v = new double[dim];
     for (int i = 0; i < dim; i++)
