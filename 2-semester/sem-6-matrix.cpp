@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 class matr //kvadratnaya matrix
 {
     int dim; //razmernost'
@@ -23,7 +26,7 @@ class matr //kvadratnaya matrix
     matr operator-();
     matr operator*(matr& r); //matrix umnozhaetsya na matrix
     friend matr operator*(double k, matr& r);
-    vect operator*(vect& r); //umnozhenie matrix na vector
+    //vect operator*(vect& r); //umnozhenie matrix na vector
 };
 
 int index(int n, int i, int j)
@@ -34,7 +37,18 @@ int index(int n, int i, int j)
 matr::matr()
 {
     dim = 0;
+    a = NULL;
+}
+
+matr::matr(int n)
+{
+    dim = n;
     a = new double[dim];
+    for (int i=1; i<=dim; i++)
+    for (int j=1; j<=dim; j++)
+    {
+        a[index(dim, i, j)] = 1;
+    }
 }
 
 matr::matr(matr& x)
@@ -47,7 +61,15 @@ matr::matr(matr& x)
     {
         tmp.a[index(dim, i, j)] = x.a[index(dim, i, j)];
     }
-    return tmp;
+}
+
+void matr::print()
+{
+    for (int i=1; i<=dim; i++)
+    for (int j=1; j<=dim; j++)
+    {
+        cout << a[index(dim, i, j)];
+    }
 }
 
 matr matr::operator*(matr& r)
@@ -64,4 +86,10 @@ matr matr::operator*(matr& r)
         }
     }
     return tmp;
+}
+
+int main()
+{
+    matr m1(3);
+    m1.print();
 }
