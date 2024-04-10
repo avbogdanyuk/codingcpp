@@ -225,13 +225,12 @@ matr::matr(int n)
 
 matr::matr(matr& x)
 {
-    matr tmp;
-    tmp.dim = x.dim;
-    tmp.a = new double[tmp.dim * tmp.dim];
+    dim = x.dim;
+    a = new double[dim * dim];
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
-            tmp.a[index(dim, i, j)] = x.a[index(dim, i, j)];
+            a[index(dim, i, j)] = x.a[index(dim, i, j)];
         }
 }
 
@@ -256,6 +255,7 @@ void matr::print()
         }
         cout << endl;
     }
+    cout << endl;
 }
 
 matr matr::operator-(matr& r)
@@ -265,10 +265,9 @@ matr matr::operator-(matr& r)
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
-            tmp.a[index(dim, i, j)] = 0;
             for (int k = 1; k <= dim; k++)
             {
-                tmp.a[index(dim, i, j)] += a[index(dim, i, k)] + r.a[index(dim, k, j)];
+                tmp.a[index(dim, i, j)] = a[index(dim, i, k)] - r.a[index(dim, k, j)];
             }
         }
     return tmp;
@@ -281,10 +280,9 @@ matr matr::operator+(matr& r)
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
-            tmp.a[index(dim, i, j)] = 0;
             for (int k = 1; k <= dim; k++)
             {
-                tmp.a[index(dim, i, j)] += a[index(dim, i, k)] - r.a[index(dim, k, j)];
+                tmp.a[index(dim, i, j)] = a[index(dim, i, k)] + r.a[index(dim, k, j)];
             }
         }
     return tmp;
@@ -317,7 +315,7 @@ matr matr::operator*(matr& r)
             tmp.a[index(dim, i, j)] = 0;
             for (int k = 1; k <= dim; k++)
             {
-                tmp.a[index(dim, i, j)] += a[index(dim, i, k)] * r.a[index(dim, k, j)];
+                tmp.a[index(dim, i, j)] = a[index(dim, i, k)] * r.a[index(dim, k, j)];
             }
         }
     return tmp;
@@ -343,7 +341,7 @@ matr operator*(double k, matr& r)
             tmp.a[index(r.dim, i, j)] = 0;
             for (int k = 1; k <= r.dim; k++)
             {
-                tmp.a[index(r.dim, i, j)] += k * r.a[index(r.dim, k, j)];
+                tmp.a[index(tmp.dim, i, j)] = k * r.a[index(r.dim, k, j)];
             }
         }
     return tmp;
@@ -352,7 +350,6 @@ matr operator*(double k, matr& r)
 vect matr::operator*(vect& r)
 {
     vect tmp(dim);
-	double ans;
     for (int i = 1; i <= dim; i++)
     {
         for (int j = 1; j <= dim; j++)
@@ -368,6 +365,13 @@ int main()
     matr m1(2);
     m1.print();
     
+    matr m2;
+    m2 = m1;
+    
+    matr m3=m1;
+    
+    (0*m1).print();
+	
     vect vv(2);
     vv.print();
     
