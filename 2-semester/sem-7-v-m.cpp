@@ -280,10 +280,7 @@ matr matr::operator+(matr& r)
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
-            for (int k = 1; k <= dim; k++)
-            {
-                tmp.a[index(dim, i, j)] = a[index(dim, i, k)] + r.a[index(dim, k, j)];
-            }
+                tmp.a[index(dim, i, j)] = a[index(dim, i, j)] + r.a[index(dim, i, j)];
         }
     return tmp;
 }
@@ -312,11 +309,7 @@ matr matr::operator*(matr& r)
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
-            tmp.a[index(dim, i, j)] = 0;
-            for (int k = 1; k <= dim; k++)
-            {
-                tmp.a[index(dim, i, j)] = a[index(dim, i, k)] * r.a[index(dim, k, j)];
-            }
+                tmp.a[index(dim, i, j)] = a[index(dim, i, j)] * r.a[index(dim, i, j)];
         }
     return tmp;
 }
@@ -373,4 +366,8 @@ int main()
     
     (m1*vv).print();
     
+    double mess[4] {1,2,3,4};
+    
+    matr mt(2,mess);
+    mt.print();
 }
