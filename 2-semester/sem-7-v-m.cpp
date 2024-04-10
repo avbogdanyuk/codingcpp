@@ -338,11 +338,7 @@ matr operator*(double k, matr& r)
     for (int i = 1; i <= r.dim; i++)
         for (int j = 1; j <= r.dim; j++)
         {
-            tmp.a[index(r.dim, i, j)] = 0;
-            for (int k = 1; k <= r.dim; k++)
-            {
-                tmp.a[index(tmp.dim, i, j)] = k * r.a[index(r.dim, k, j)];
-            }
+        	tmp.a[index(tmp.dim, i, j)] = k * r.a[index(r.dim, i, j)];
         }
     return tmp;
 }
@@ -370,10 +366,11 @@ int main()
     
     matr m3=m1;
     
-    (0*m1).print();
+    (9*m1).print();
 	
     vect vv(2);
     vv.print();
     
     (m1*vv).print();
+    
 }
