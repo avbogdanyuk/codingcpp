@@ -19,11 +19,12 @@ public:
     //methods
     void print();
     matr operator+(matr& r);
-    //matr operator-(matr& r);
-    //matr operator-();
+    matr operator-(matr& r);
+    matr operator=(matr& r);
+    matr operator-();
     matr operator*(matr& r); //матрица умножается на матрицу
-    //friend matr operator*(double k, matr& r);
-    //vect operator*(vect& r); //умножение матрицы на вектор
+    friend matr operator*(double k, matr& r);
+    vect operator*(vect& r); //умножение матрицы на вектор
 };
 
 int index(int n, int i, int j)
@@ -40,7 +41,7 @@ matr::matr()
 matr::matr(int n)
 {
     dim = n;
-    a = new double[dim];
+    a = new double[dim*dim];
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
@@ -54,7 +55,7 @@ matr::matr(matr& x)
 {
     matr tmp;
     tmp.dim = x.dim;
-    tmp.a = new double[dim];
+    tmp.a = new double[tmp.dim*tmp.dim];
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
@@ -65,7 +66,7 @@ matr::matr(matr& x)
 matr::matr(int n, double* x)
 {
     dim = n;
-    a = new double[n];
+    a = new double[dim*dim];
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
@@ -85,6 +86,54 @@ void matr::print()
     }
 }
 
+matr matr::operator-(matr& r)
+{
+    matr tmp(this->dim); //берем размерность левого операнда
+
+    for (int i = 1; i <= dim; i++)
+        for (int j = 1; j <= dim; j++)
+        {
+            tmp.a[index(dim, i, j)] = 0;
+            for (int k = 1; k <= dim; k++)
+            {
+                tmp.a[index(dim, i, j)] += a[index(dim, i, k)] + r.a[index(dim, k, j)];
+            }
+        }
+    return tmp;  
+}
+
+matr matr::operator+(matr& r)
+{
+    matr tmp(this->dim); //берем размерность левого операнда
+
+    for (int i = 1; i <= dim; i++)
+        for (int j = 1; j <= dim; j++)
+        {
+            tmp.a[index(dim, i, j)] = 0;
+            for (int k = 1; k <= dim; k++)
+            {
+                tmp.a[index(dim, i, j)] += a[index(dim, i, k)] - r.a[index(dim, k, j)];
+            }
+        }
+    return tmp;  
+}
+
+matr matr::operator=(matr& r)
+{
+     if (dim == 0)
+    {
+        dim = r.dim;
+        a = new double[dim*dim];
+    }
+    
+    for (int i = 1; i <= dim; i++)
+        for (int j = 1; j <= dim; j++)
+        {
+            a[index(dim, i, j)] = r.a[index(dim, i, j)];
+        }
+
+    return *this;
+}
 
 matr matr::operator*(matr& r)
 {
@@ -100,6 +149,48 @@ matr matr::operator*(matr& r)
             }
         }
     return tmp;
+}
+
+matr matr::operator-()
+{
+    for (int i = 1; i <= dim; i++)
+        for (int j = 1; j <= dim; j++)
+        {
+            a[index(dim, i, j)] = -1*a[index(dim, i, j)];
+        }
+    return *this;
+}
+
+matr operator*(double k, matr& r)
+{
+    matr tmp(r.dim); //берем размерность левого операнда
+
+    for (int i = 1; i <= r.dim; i++)
+        for (int j = 1; j <= r.dim; j++)
+        {
+            tmp.a[index(r.dim, i, j)] = 0;
+            for (int k = 1; k <= r.dim; k++)
+            {
+                tmp.a[index(r.dim, i, j)] += k * r.a[index(r.dim, k, j)];
+            }
+        }
+    return tmp;	
+}
+
+vect operator*(vect& r)
+{
+    matr tmp(dim); //берем размерность левого операнда
+
+    for (int i = 1; i <= r.dim; i++)
+        for (int j = 1; j <= r.dim; j++)
+        {
+            tmp.a[index(r.dim, i, j)] = 0;
+            for (int k = 1; k <= r.dim; k++)
+            {
+                tmp.a[index(r.dim, i, j)] += k * r.a[index(r.dim, k, j)];
+            }
+        }
+    return tmp;	
 }
 
 int main()
