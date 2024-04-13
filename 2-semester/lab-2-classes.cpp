@@ -57,7 +57,7 @@ vect::vect(int d)
     v = new double[dim];
     for (int i = 0; i < dim; i++)
     {
-        v[i] = 1;
+        v[i] = 0;
     }
 }
 
@@ -109,6 +109,7 @@ vect vect::operator=(const vect& r)
     if (dim > r.dim)
     {
         dim = r.dim;
+        v = new double[dim];
     }
 
     for (int i = 0; i < dim; i++)
@@ -122,6 +123,12 @@ vect vect::operator=(const vect& r)
 
 vect vect::operator+(vect& r)
 {
+    if (dim > r.dim)
+    {
+        r.dim;
+        r.v = new double[r.dim];
+    }
+
     cout << "\nСложения вектора N " << num << " и вектора N " << r.num << endl;
     vect tmp(dim);
     for (int i = 0; i < dim; i++)
@@ -133,6 +140,12 @@ vect vect::operator+(vect& r)
 
 vect operator-(vect l, vect r)
 {
+    if (l.dim > r.dim)
+    {
+        r.dim;
+        r.v = new double[r.dim];
+    }
+
     cout << "\nВычитание из вектора N "<< l.num << " вектора N "<< r.num << endl;
     vect tmp(l.dim);
     for (int i = 0; i < l.dim; i++)
@@ -265,6 +278,31 @@ void matr::print()
     cout << endl;
 }
 
+matr matr::operator=(matr& r)
+{
+    if (dim == 0)
+    {
+        dim = r.dim;
+        a = new double[dim * dim];
+    }
+
+    if (dim > r.dim)
+    {
+        dim = r.dim;
+        a = new double[dim * dim];
+    }
+
+    for (int i = 1; i <= dim; i++)
+    {
+        for (int j = 1; j <= dim; j++)
+        {
+            a[index(dim, i, j)] = r.a[index(dim, i, j)];
+        }
+    }
+
+    return *this;
+}
+
 matr matr::operator-(matr& r)
 {
     matr tmp(this->dim); //берем размерность левого операнда
@@ -272,10 +310,7 @@ matr matr::operator-(matr& r)
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
-            for (int k = 1; k <= dim; k++)
-            {
-                tmp.a[index(dim, i, j)] = a[index(dim, i, k)] - r.a[index(dim, k, j)];
-            }
+            tmp.a[index(dim, i, j)] = a[index(dim, i, j)] - r.a[index(dim, i, j)];
         }
     return tmp;
 }
@@ -290,23 +325,6 @@ matr matr::operator+(matr& r)
             tmp.a[index(dim, i, j)] = a[index(dim, i, j)] + r.a[index(dim, i, j)];
         }
     return tmp;
-}
-
-matr matr::operator=(matr& r)
-{
-    if (dim == 0)
-    {
-        dim = r.dim;
-        a = new double[dim * dim];
-    }
-
-    for (int i = 1; i <= dim; i++)
-        for (int j = 1; j <= dim; j++)
-        {
-            a[index(dim, i, j)] = r.a[index(dim, i, j)];
-        }
-
-    return *this;
 }
 
 matr matr::operator*(matr& r)
@@ -345,12 +363,18 @@ matr operator*(double k, matr& r)
 
 vect matr::operator*(vect& r)
 {
-    vect tmp(dim);
+    vect tmp(r.dim);
+
+    if (dim < r.dim)
+        r.dim = dim;
+    else
+        dim = r.dim;
+    
     for (int i = 1; i <= dim; i++)
     {
         for (int j = 1; j <= dim; j++)
         {
-            tmp.v[i - 1] += a[index(dim, i, j)] * r.v[j - 1];
+        tmp.v[i-1] += a[index(dim, i, j)] * r.v[j-1];
         }
     }
     return tmp;
@@ -360,24 +384,35 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
 
-    matr m1(2);
+    //ВЕКТОРЫ
+    double m[3]{ 1,2,3 };
+    vect v1, v2(2), v3(3, m), v4;
+    v1.print();
+    v2.print();
+    v3.print();
+
+    v1 = v3 + v4;
+    v1.print();
+
+    cout << v3 * v3; //скалярное произведение
+    (v1 + v3).print(); //сложение
+    (v1 - v3).print(); //вычитание
+    (8 * v3).print(); //произведение с константой
+
+    //МАТРИЦЫ
+    double mm[9]{ 1,2,3,4,5,6,7,8,9 };
+    matr m1, m2(2), m3(3, mm), m4;
+    m1.print();
+    m2.print();
+    m3.print();
+    m1 = m3;
     m1.print();
 
-    matr m2;
-    m2 = m1;
-
-    matr m3 = m1;
-
-    (9 * m1).print();
-
-    vect vv(2);
-    vv.print();
-
-    (m1 * vv).print();
-
-    double mess[4]{ 1,2,3,4 };
-
-    matr mt(2, mess);
-    mt.print();
-    return 0;
+    (m3 * m3).print(); //произведение
+    (m1 + m3).print(); //сложение
+    (m1 - m3).print(); //вычитание
+    (8 * m3).print(); //произведение с константой
+    
+    //ПРОИЗВЕДЕНИЕ МАТРИЦЫ НА ВЕКТОР
+    (m1 * v3).print();
 }
