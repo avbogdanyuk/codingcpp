@@ -5,15 +5,13 @@ class vect
 {
 public:
     int dim; //размерность вектора
-    double* v; //компоненты класса, массив содержит количество компонентов, pointer
+    double* v; //компоненты класса
     int num; //номер вектора
 
 
     static int count; //количество созданных векторов
 
-    //Методы
-
-        //конструкторы
+    //конструкторы
     vect();
     vect(int d); //d - размерность векторы, нулевой вектор
     vect(int d, double* x); //x содержит компоненты вектора
@@ -22,17 +20,17 @@ public:
     //диструктор
     ~vect()
     {
-        cout << "\nДиструктор, уничтожаем вектор N " << num << endl;
-	    delete v;
+        cout << "\nДиструктор уничтожает вектор N " << num << endl;
+        delete v;
     };
 
-    //обычные методы класса
+    //методы класса
     void print();
     vect operator+(vect& r); //компонентная функция класса, левый операнд известен
     //создаем функцию ДРУГ КЛАССА
     friend vect operator-(vect l, vect r);
     vect operator=(const vect& r);
-    vect operator-();//uno uno
+    vect operator-();//унарное вычитание
     double operator*(vect& r); //скалярное произведение
     friend vect operator*(double k, vect& r);
 
@@ -85,7 +83,7 @@ vect::vect(vect& x)
     v = new double[dim]; //выделяем память под массив, состоящий из dim кол-ва double элементов
     for (int i = 0; i < dim; i++)
     {
-        v[i] = x.v[i]; //copying elements step by step
+        v[i] = x.v[i]; //копируем элементы
     }
 }
 
@@ -107,18 +105,24 @@ vect vect::operator=(const vect& r)
         dim = r.dim;
         v = new double[dim];
     }
+
+    if (dim > r.dim)
+    {
+        dim = r.dim;
+    }
+
     for (int i = 0; i < dim; i++)
     {
         v[i] = r.v[i];
     }
-    cout << "\nПрисваивание значений вектору N " << num << endl;
+    cout << "\nПрисваивание значений вектору N " << num << " значения вектора N " << r.num << endl;
 
     return *this;
 }
 
 vect vect::operator+(vect& r)
 {
-    cout << "\nСоздаем новый вектор N " << num << endl;
+    cout << "\nСложения вектора N " << num << " и вектора N " << r.num << endl;
     vect tmp(dim);
     for (int i = 0; i < dim; i++)
     {
@@ -129,7 +133,7 @@ vect vect::operator+(vect& r)
 
 vect operator-(vect l, vect r)
 {
-    cout << "\nОператор вычитания" << endl;
+    cout << "\nВычитание из вектора N "<< l.num << " вектора N "<< r.num << endl;
     vect tmp(l.dim);
     for (int i = 0; i < l.dim; i++)
     {
@@ -140,7 +144,7 @@ vect operator-(vect l, vect r)
 
 vect vect::operator-()
 {
-    cout << "\nОператор унарного вычитания" << endl;
+    cout << "\nЭлементы вектора N " << num << "умноженые на (-1)" << endl;
     for (int i = 0; i < dim; i++)
     {
         v[i] = -v[i];
@@ -152,15 +156,17 @@ double vect::operator*(vect& r)//скалярное произведение
 {
     double dotprod = 0;
 
-    cout << "\nОператор вычисления скалярного произведения" << endl;
+    cout << "\nОператор вычисления скалярного произведения вектора N " << num << " и вектора N" << r.num << endl;
 
-    if (dim == r.dim)
-    {
-        for (int i = 0; i < dim; i++)
+    if (dim < r.dim)
+        r.dim = dim;
+    else
+        dim = r.dim;
+
+    for (int i = 0; i < dim; i++)
         {
             dotprod += v[i] * r.v[i];
         }
-    }
     return dotprod;
 }
 
@@ -180,16 +186,16 @@ class matr //квадратная матрица
     double* a; //компененты
 public:
 
-    //constuctors
+    //конструкторы
     matr(); //null matrix, a=NULL
     matr(matr& x); //копирование
     matr(int n); //единичная матрица
     matr(int n, double* x); //данные для компонент матрицы из x
 
-    //destructor
+    //диструктор
     ~matr() { delete a; };
 
-    //methods
+    //методы
     void print();
     matr operator+(matr& r);
     matr operator-(matr& r);
@@ -281,7 +287,7 @@ matr matr::operator+(matr& r)
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
-                tmp.a[index(dim, i, j)] = a[index(dim, i, j)] + r.a[index(dim, i, j)];
+            tmp.a[index(dim, i, j)] = a[index(dim, i, j)] + r.a[index(dim, i, j)];
         }
     return tmp;
 }
@@ -310,7 +316,7 @@ matr matr::operator*(matr& r)
     for (int i = 1; i <= dim; i++)
         for (int j = 1; j <= dim; j++)
         {
-                tmp.a[index(dim, i, j)] = a[index(dim, i, j)] * r.a[index(dim, i, j)];
+            tmp.a[index(dim, i, j)] = a[index(dim, i, j)] * r.a[index(dim, i, j)];
         }
     return tmp;
 }
@@ -332,7 +338,7 @@ matr operator*(double k, matr& r)
     for (int i = 1; i <= r.dim; i++)
         for (int j = 1; j <= r.dim; j++)
         {
-        	tmp.a[index(tmp.dim, i, j)] = k * r.a[index(r.dim, i, j)];
+            tmp.a[index(tmp.dim, i, j)] = k * r.a[index(r.dim, i, j)];
         }
     return tmp;
 }
@@ -344,7 +350,7 @@ vect matr::operator*(vect& r)
     {
         for (int j = 1; j <= dim; j++)
         {
-            tmp.v[i-1] += a[index(dim, i, j)]*r.v[j-1];
+            tmp.v[i - 1] += a[index(dim, i, j)] * r.v[j - 1];
         }
     }
     return tmp;
@@ -352,23 +358,26 @@ vect matr::operator*(vect& r)
 
 int main()
 {
+    setlocale(LC_ALL, "Russian");
+
     matr m1(2);
     m1.print();
-    
+
     matr m2;
     m2 = m1;
-    
-    matr m3=m1;
-    
-    (9*m1).print();
-	
+
+    matr m3 = m1;
+
+    (9 * m1).print();
+
     vect vv(2);
     vv.print();
-    
-    (m1*vv).print();
-    
-    double mess[4] {1,2,3,4};
-    
-    matr mt(2,mess);
+
+    (m1 * vv).print();
+
+    double mess[4]{ 1,2,3,4 };
+
+    matr mt(2, mess);
     mt.print();
+    return 0;
 }
