@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class point 
+class point
 {
 protected:
 
@@ -20,7 +20,9 @@ public:
         glfwDestroyWindow(window);
         glfwTerminate();
     }
-    void draw();
+    void draw(); //рисуем
+    point hide(); //закрашиваем черным
+    void move(float dxx, float dyy);
 };
 
 point::point()
@@ -78,6 +80,7 @@ void point::draw()
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
+        glPointSize(7);
         glBegin(GL_POINTS);
         glColor3f(color[0], color[1], color[2]);
         glVertex2f(0.0f, 0.0f);
@@ -88,12 +91,20 @@ void point::draw()
     }
 }
 
-int main() {
-    point point1(0, 0, 1, 0, 0);
-    point1.draw();
-    point p;
-    p.draw();
+point point::hide() //OpenGL забывает об рисунке, когда он уже был нарисован, поэтому в hide нет смысла
+{
+    color[0] = 0;
+    color[1] = 0;
+    color[2] = 0;
+    return *this;
+}
 
-
+int main() 
+{
+    cout << "Welcome to simulator of madness. ENJOY AS LONG AS YOU CAN";
+    point p1(0, 0, 1, 0, 0);
+    //p1.hide().draw();
+    p1.draw();
     return 0;
+
 }
