@@ -3,124 +3,93 @@
 
 using namespace std;
 
-//прога для того, чтобы нарисовать линию
-
-class point
-{
+class point {
 protected:
 
+    GLFWwindow* window;
     float x, y;
-    int c1, c2, c3; //c1,c2,c3 - red, green, blue
+    float color[3] {1,1,1}; //базовый цвет - белый
 
 public:
 
-    point();
-    point(float xx, float yy, int cc1, int cc2, int cc3);
-    ~point()
+    point(); //точка белого цвета (0, 0)
+    point(float xx, float yy, float r, float g, float b); //точка цвет(r,g,b) коорд.(xx,yy)
+    ~point() //диструктор
     {
-        cout << "Point destroyed" << endl;
+        glfwDestroyWindow(window);
+        glfwTerminate();
     }
-    void draw(); //рисуем точку
-    void hide(); //закрашиваем черным
-    void move(int dxx, int dyy); //двигаем на вектор
+
+    void draw() {
+        while (!glfwWindowShouldClose(window)) {
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            glBegin(GL_POINTS);
+            glColor3f(color[0], color[1], color[2]);
+            glVertex2f(0.0f, 0.0f);
+            glEnd();
+
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+        }
+    }
+
 };
 
-
-point::point()
-{
-    x, y = 0;
-    //c1, c2, c3 = 1;
-}
-
-point::point(float xx, float yy, int cc1, int cc2, int cc3)
-{
-    x = xx; y = yy; cc1 = c1; cc2 = c2; cc3 = c3;
-}
-
-void point::draw()
-{
-    glLineWidth(2.0);
-    glColor3f(1, 1, 1);
-    glBegin(GL_POINTS);
-    glVertex2f(x, y);
-    glEnd();
-}
-
-void point::hide()
-{
-    c1, c2, c3 = 0;
-}
-
-
-int mainpepep()
+point::point() 
 {
     //Инициализируем библиотеку GLFW
-    if (!glfwInit()) return 0;
-
-    //Создаем окно
-    GLFWwindow* window = glfwCreateWindow(680, 480, "Line Drawing", NULL, NULL);
-
-    //Если окно не создалось, то ошибка => завершаем работу программы
-    if (window == NULL)
+    if (glfwInit() == NULL)
     {
-        cout << "Failed to create GLFW window" << endl;
+        cout << "Failed to initialize GLFW" << endl;
+        exit(1);
+    }
+
+    window = glfwCreateWindow(640, 480, "Drawing", NULL, NULL);
+
+    if (window == NULL) //If window creation fails, NULL will be returned
+    {
+        cout << "Failed to create window" << endl;
         glfwTerminate();
-        return 0;
+        exit(1);
     }
 
-    //Чтобы рисунок отображался в окне
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(window); //отображение рисунка
 
-    //Цикл работает, пока пользователь не закроет окно
-    while (glfwWindowShouldClose(window) == NULL)
-    {
-        //Рисуем точку с (-0.5, -0.5) до (0.5, 0.5)
-        //Цвета RGB
-        glColor3f(1, 1, 1);
-        glBegin(GL_POINTS);
-        glVertex2f(-0.5f, -0.5f);
-        //glVertex2f(0.5f, 0.5f);
-        glEnd();
-
-        // Swap front and back buffers
-        glfwSwapBuffers(window);
-
-        // Poll for and process events
-        glfwPollEvents();
-    }
-
-
-    //Завершаем работу с GLFW
-    glfwTerminate();
-
-    return 0;
+    //основа
+    x = 0; y = 0;
 }
 
-int main()
+point::point(float xx, float yy, float r, float g, float b)
 {
-    if (glfwInit() == NULL) return 0;
-
-    GLFWwindow* window = glfwCreateWindow(640, 480, "Drawing", NULL, NULL);
-
-    if (window == NULL)
+    //Инициализируем библиотеку GLFW
+    if (glfwInit() == NULL)
     {
+        cout << "Failed to initialize GLFW" << endl;
+        exit(1);
+    }
+
+    window = glfwCreateWindow(640, 480, "Drawing", NULL, NULL);
+
+    if (window == NULL) //If window creation fails, NULL will be returned
+    {
+        cout << "Failed to create window" << endl;
         glfwTerminate();
-        return 0;
+        exit(1);
     }
 
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(window); //отображение рисунка
 
-    point p;
+    //основа
+    x = xx; y = yy;
+    color[0] = r;
+    color[1] = g;
+    color[2] = b;
+}
 
-    while (glfwWindowShouldClose(window) == NULL)
-    {
-        p.draw();
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
+int main() {
+    point point(0,0,1,0,0);
+    point.draw();
 
     return 0;
 }
