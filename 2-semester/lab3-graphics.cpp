@@ -22,7 +22,7 @@ public:
     }
     void draw(); //рисуем
     point hide(); //закрашиваем черным
-    void move(float dxx, float dyy);
+    point move(float dxx, float dyy);
 };
 
 point::point()
@@ -83,7 +83,7 @@ void point::draw()
         glPointSize(7);
         glBegin(GL_POINTS);
         glColor3f(color[0], color[1], color[2]);
-        glVertex2f(0.0f, 0.0f);
+        glVertex2f(x, y);
         glEnd();
 
         glfwSwapBuffers(window);
@@ -99,12 +99,21 @@ point point::hide() //OpenGL забывает об рисунке, когда о
     return *this;
 }
 
+point point::move(float dxx, float dyy)
+{
+    point tmp;
+    tmp.x = x + dxx; tmp.y = y + dyy;
+    tmp.color[0] = color[0];
+    tmp.color[1] = color[1];
+    tmp.color[2] = color[2];
+    return tmp;
+}
 int main() 
 {
     cout << "Welcome to simulator of madness. ENJOY AS LONG AS YOU CAN";
     point p1(0, 0, 1, 0, 0);
     //p1.hide().draw();
-    p1.draw();
-    return 0;
+    p1.move(0.1,0.2).draw();
 
+    return 0;
 }
