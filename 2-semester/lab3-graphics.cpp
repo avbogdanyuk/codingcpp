@@ -3,12 +3,13 @@
 
 using namespace std;
 
-class point {
+class point 
+{
 protected:
 
     GLFWwindow* window;
     float x, y;
-    float color[3] {1,1,1}; //базовый цвет - белый
+    float color[3]{ 1,1,1 }; //базовый цвет - белый
 
 public:
 
@@ -19,24 +20,10 @@ public:
         glfwDestroyWindow(window);
         glfwTerminate();
     }
-
-    void draw() {
-        while (!glfwWindowShouldClose(window)) {
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            glBegin(GL_POINTS);
-            glColor3f(color[0], color[1], color[2]);
-            glVertex2f(0.0f, 0.0f);
-            glEnd();
-
-            glfwSwapBuffers(window);
-            glfwPollEvents();
-        }
-    }
-
+    void draw();
 };
 
-point::point() 
+point::point()
 {
     //Инициализируем библиотеку GLFW
     if (glfwInit() == NULL)
@@ -80,16 +67,33 @@ point::point(float xx, float yy, float r, float g, float b)
 
     glfwMakeContextCurrent(window); //отображение рисунка
 
-    //основа
     x = xx; y = yy;
     color[0] = r;
     color[1] = g;
     color[2] = b;
 }
 
+void point::draw()
+{
+    while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glBegin(GL_POINTS);
+        glColor3f(color[0], color[1], color[2]);
+        glVertex2f(0.0f, 0.0f);
+        glEnd();
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+}
+
 int main() {
-    point point(0,0,1,0,0);
-    point.draw();
+    point point1(0, 0, 1, 0, 0);
+    point1.draw();
+    point p;
+    p.draw();
+
 
     return 0;
 }
