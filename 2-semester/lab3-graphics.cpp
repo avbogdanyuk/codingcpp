@@ -8,17 +8,17 @@ class point
 protected:
 
     GLFWwindow* window;
-    float x, y;
-    float color[3]{ 1,1,1 }; //базовый цвет - белый
+    GLfloat x, y;
+    GLfloat color[3]{ 1,1,1 }; //базовый цвет - белый
 
 public:
 
     point(); //точка белого цвета (0, 0)
-    point(float xx, float yy, float r, float g, float b); //точка цвет(r,g,b) коорд.(xx,yy)
+    point(GLfloat xx, GLfloat yy, GLfloat r, GLfloat g, GLfloat b); //точка цвет(r,g,b) коорд.(xx,yy)
     ~point() {}//диструктор
     void draw(); //рисуем
     point hide(); //закрашиваем черным
-    point move(float dxx, float dyy);
+    point move(GLfloat dxx, GLfloat dyy);
 };
 
 point::point()
@@ -44,7 +44,7 @@ point::point()
     x = 0; y = 0;
 }
 
-point::point(float xx, float yy, float r, float g, float b)
+point::point(GLfloat xx, GLfloat yy, GLfloat r, GLfloat g, GLfloat b)
 {
     //Инициализируем библиотеку GLFW
     if (glfwInit() == NULL)
@@ -88,13 +88,13 @@ void point::draw()
 
 point point::hide() //OpenGL забывает об рисунке, когда он уже был нарисован, поэтому в hide нет смысла
 {
-    color[0] = 0;
-    color[1] = 0;
-    color[2] = 0;
+    color[0] = 0.0f;
+    color[1] = 0.0f;
+    color[2] = 0.0f;
     return *this;
 }
 
-point point::move(float dxx, float dyy)
+point point::move(GLfloat dxx, GLfloat dyy)
 {
     point tmp;
     tmp.x = x + dxx; tmp.y = y + dyy;
@@ -108,14 +108,15 @@ class tline //: public point
 {
 protected:
     GLFWwindow* window;
-    float dx, dy,x,y;
+    GLfloat dx, dy,x,y;
+    GLfloat color[3];
 public:
     tline();
-    tline(float xx, float yy, float dxx, float dyy);
+    tline(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy);
     ~tline() {}
     void draw();
     tline hide();
-    tline move(float dxx, float dyy);
+    tline move(GLfloat dxx, GLfloat dyy);
     tline rotate(double fi);
 };
 
@@ -142,7 +143,7 @@ tline::tline()
     x, y, dx, dy = 0;
 }
 
-tline::tline(float xx, float yy, float dxx, float dyy)
+tline::tline(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy)
 {
     //Инициализируем библиотеку GLFW
     if (glfwInit() == NULL)
@@ -182,15 +183,23 @@ void tline::draw()
     }
 }
 
+tline tline::hide()
+{
+    color[0] = 0.0f;
+    color[1] = 0.0f;
+    color[2] = 0.0f;
+    return *this;
+}
+
 int main() 
 {
     cout << "Welcome to simulator of madness. ENJOY AS LONG AS YOU CAN";
-    point p1(0, 0, 1, 0, 0);
+    point p1(0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
     p1.draw();
     //p1.hide().draw();
-    p1.move(0.1,0.2).draw();
+    p1.move(0.1f,0.2f).draw();
 
-    tline t1(0.1,0.1,0.2,-0.3);
+    tline t1(0.1f,0.1f,0.2f,-0.3f);
     t1.draw();
     return 0;
 }
