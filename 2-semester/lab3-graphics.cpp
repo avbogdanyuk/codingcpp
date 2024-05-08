@@ -180,11 +180,6 @@ public:
     }
 };
 
-class Rhomb : public Square
-{
-
-};
-
 int main() {
     GLFWwindow* window;
 
@@ -202,7 +197,7 @@ int main() {
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-
+        
         Point p(0.0f,0.8f, 1,0,0);
         p.draw();
         p.move(0.5f, 0.5f);
@@ -215,7 +210,7 @@ int main() {
         l.rotate(97);
         l.rotate(10);
         
-        Square s(0.1f,0.1,0.1f);
+        Square s(0.1f,0.1,0.3f);
         s.draw();
         s.move(0.1f, 0.1f);
         s.draw();
@@ -224,9 +219,7 @@ int main() {
         Rectangle r(-0.1f, -0.1f, 0.4f, 0.6f);
         r.draw();
         r.rotate(90);
-
-
-
+        
         glfwSwapBuffers(window);
 
         glfwPollEvents();
