@@ -1,20 +1,26 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-class point {
+class Point {
 protected:
     GLfloat x, y;
-    GLfloat color[3]{1.0f,1.0f,1.0f};
+    GLfloat color[3]{1,1,1};
 
 public:
-    point() : x(0.0f), y(0.0f) {}
+    Point() : x(0.0f), y(0.0f) {}
 
-    point(GLfloat x, GLfloat y) : x(x), y(y) {}
+    Point(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b) : x(x), y(y)
+    {
+        color[0] = r;
+        color[1] = g;
+        color[2] = b;
+    }
 
-    ~point() {}
+    ~Point() {}
 
     void draw() 
     {
+        glPointSize(5);
         glColor3f(color[0], color[1], color[2]);
         glBegin(GL_POINTS);
         glVertex2f(x, y);
@@ -33,19 +39,20 @@ public:
     }
 };
 
-class Line : public point 
+class Line : public Point 
 {
 protected:
     GLfloat dx, dy;
     GLfloat angle;
 
 public:
-    Line() : point(0.0f, 0.0f), dx(0.0f), dy(0.0f), angle(0.0f) {}
-    Line(GLfloat x, GLfloat y, GLfloat dxx, GLfloat dyy) : point(x, y), dx(dxx), dy(dyy), angle(0.0f) {}
+    Line() : Point(0.0f, 0.0f, 1.0f, 1.0f, 1.0f), dx(0.0f), dy(0.0f), angle(0.0f) {}
+    Line(GLfloat x, GLfloat y, GLfloat dxx, GLfloat dyy) : Point(x, y, color[0], color[1], color[2]), dx(dxx), dy(dyy), angle(0.0f) {}
     ~Line() {}
 
     void draw() 
     {
+        glColor3f(1,1,1);
         glBegin(GL_LINES);
         glVertex2f(x, y);
         glVertex2f(dx, dy);
@@ -68,15 +75,23 @@ public:
         glRotatef(angle, 0.0f, 0.0f, 1.0f);
 
         glBegin(GL_LINES);
-        glVertex2f(0.0f, 0.0f);
+        glVertex2f(x,y);
         glVertex2f(dx - x, dy - y);
         glEnd();
 
         glPopMatrix();
     }
+
+    void hide()
+    {
+        color[0], color[1], color[2] = 0.0f;
+    }
 };
 
-class Square : public Line {
+class Square : public Line 
+{
+protected:
+    GLfloat size;
 public:
     Square() : Line(0.1f, 0.1f, 0.2f, 0.1f), size(0.1f) {}
 
@@ -86,12 +101,12 @@ public:
 
     void draw() 
     {
-        glColor3f(color[0], color[1], color[2]);
+        glColor3f(1,1,1);
         glBegin(GL_LINE_LOOP);
         glVertex2f(x, y);
-        glVertex2f(x + size, y);
-        glVertex2f(x + size, y - size);
-        glVertex2f(x, y - size);
+        glVertex2f(y, x + size);
+        glVertex2f(y - size, x + size);
+        glVertex2f(y - size,x);
         glEnd();
     }
 
@@ -101,13 +116,73 @@ public:
         y = dy;
     }
 
-    void rotate(GLfloat angle) 
+    void rotate(GLfloat fi) 
     {
-        // Rotate the square by angle
-    }
+        angle += fi;
 
-private:
-    GLfloat size;
+        glPushMatrix();
+        glTranslatef(x, y, 0.0f);
+        glRotatef(angle, 0.0f, 0.0f, 1.0f);
+
+        glColor3f(1, 1, 1);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(x, y);
+        glVertex2f(y, x + size);
+        glVertex2f(y - size, x + size);
+        glVertex2f(y - size, x);
+        glEnd();
+
+        glPopMatrix();
+    }
+};
+
+class Rectangle : public Square
+{
+protected: 
+
+    GLfloat height, width;
+
+public:
+    Rectangle() : Square(), height(0.0f), width(0.0f) {}
+    Rectangle(GLfloat x, GLfloat y, GLfloat height, GLfloat width) : Square(x,y,0.0f), height(height), width(width) {}
+    ~Rectangle() {}
+    void draw()
+    {
+        glColor3f(1, 1, 1);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(x, y);
+        glVertex2f(y, x + width);
+        glVertex2f(y - height, x + width);
+        glVertex2f(y - height, x);
+        glEnd();
+    }
+    void hide()
+    {
+        color[0], color[1], color[2] = 0.0f;
+    }
+    void rotate(GLfloat fi)
+    {
+        angle += fi;
+
+        glPushMatrix();
+        glTranslatef(x, y, 0.0f);
+        glRotatef(angle, 0.0f, 0.0f, 1.0f);
+
+        glColor3f(1, 1, 1);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(x, y);
+        glVertex2f(y, x + width);
+        glVertex2f(y - height, x + width);
+        glVertex2f(y - height, x);
+        glEnd();
+
+        glPopMatrix();
+    }
+};
+
+class Rhomb : public Square
+{
+
 };
 
 int main() {
@@ -117,7 +192,7 @@ int main() {
         return -1;
     }
 
-    window = glfwCreateWindow(800, 600, "OpenGL", NULL, NULL);
+    window = glfwCreateWindow(800, 600, "Drawing shapes", NULL, NULL);
     if (!window) {
         glfwTerminate();
         return -1;
@@ -128,22 +203,30 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        point p(0.0f,0.8f);
+        Point p(0.0f,0.8f, 1,0,0);
         p.draw();
         p.move(0.5f, 0.5f);
         p.draw();
         
-        Line l(0.0f, 0.0f, 0.8f, 0.8f);
+        Line l(0.0f, 0.8f, 0.1f, 0.0f);
         l.draw();
-        l.move(0.0f, 0.0f, 0.0f, 0.1f);
+        l.move(0.0f, 0.0f, 0.0f, 0.5f);
         l.draw();
         l.rotate(97);
         l.rotate(10);
         
-        Square s;
+        Square s(0.1f,0.1,0.1f);
         s.draw();
-        s.move(-0.5f, -0.5f);
+        s.move(0.1f, 0.1f);
+        s.draw();
+        s.rotate(90);
         
+        Rectangle r(-0.1f, -0.1f, 0.4f, 0.6f);
+        r.draw();
+        r.rotate(90);
+
+
+
         glfwSwapBuffers(window);
 
         glfwPollEvents();
