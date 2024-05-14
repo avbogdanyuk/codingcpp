@@ -38,7 +38,7 @@ public:
     }
 };
 
-class Line : public Point 
+class Line : public Point
 {
 public:
     GLfloat dx, dy;
@@ -46,7 +46,7 @@ public:
 
     Line() {}
 
-    Line(Point p, GLfloat dxx, GLfloat dyy) 
+    Line(Point p, GLfloat dxx, GLfloat dyy)
     {
         x = p.x;
         y = p.y;
@@ -60,8 +60,8 @@ public:
     }
 
     ~Line() {}
-    
-    void draw() 
+
+    void draw()
     {
         glColor3f(color[0], color[1], color[2]);
         glBegin(GL_LINES);
@@ -69,7 +69,7 @@ public:
         glVertex2f(dx, dy);
         glEnd();
     }
-    
+
     void move(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy)
     {
         x = xx;
@@ -80,10 +80,9 @@ public:
 
     void rotate(GLfloat fi)
     {
-        angle += fi;
         glPushMatrix();
         glTranslatef(x, x, 0.0f);
-        glRotatef(angle, 0.0f, 0.0f, 1.0f);
+        glRotatef(fi, 0.0f, 0.0f, 1.0f);
 
         glBegin(GL_LINES);
         glVertex2f(x, y);
@@ -137,19 +136,19 @@ int main() {
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-        
-        Point p(0.0f,0.0f, 1,0,0);
+
+        Point p(0.0f, 0.0f, 1, 0, 0);
         p.draw();
 
         Line l(p, 0.3f, 0.5f);
-        l.draw();
-        l.rotate(90);
+        //l.draw();
+        //l.rotate(10);
 
         Line l1(p, 0.45f, 0.6f);
         //l1.draw();
 
-        Paral ppap(l,l1,45);
-        //ppap.draw();
+        Paral ppap(l, l1, 45);
+        ppap.draw();
 
         glfwSwapBuffers(window);
 
