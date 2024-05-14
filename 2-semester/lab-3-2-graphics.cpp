@@ -1,135 +1,162 @@
-//ВЫВОД ВСЕХ ТОЧЕК В ОДНОМ ОКНЕ
-
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-using namespace std;
-
-class point 
-{
+class Point {
 public:
+    GLfloat x, y;
+    GLfloat color[3]{1,1,1};
 
-    //GLFWwindow* window;
-    float x, y;
-    float color[3]{ 1,1,1 }; //базовый цвет - белый
+    Point() : x(0.0f), y(0.0f) {}
 
-public:
+    Point(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b) : x(x), y(y)
+    {
+        color[0] = r;
+        color[1] = g;
+        color[2] = b;
+    }
 
-    point(); //точка белого цвета (0, 0)
-    point(float xx, float yy, float r, float g, float b); //точка цвет(r,g,b) коорд.(xx,yy)
-    ~point() //диструктор
-    {}
-    //void draw();
+    ~Point() {}
+
+    void draw() 
+    {
+        glPointSize(5);
+        glColor3f(color[0], color[1], color[2]);
+        glBegin(GL_POINTS);
+        glVertex2f(x, y);
+        glEnd();
+    }
+
+    void hide()
+    {
+        color[0], color[1], color[2] = 0.0f;
+    }
+
+    void move(GLfloat dx, GLfloat dy) 
+    {
+        x = dx;
+        y = dy;
+    }
 };
 
-point::point()
+class Line : public Point 
 {
-    /*//Инициализируем библиотеку GLFW
-    if (glfwInit() == NULL)
+public:
+    GLfloat dx, dy;
+    GLfloat angle;
+
+    Line() {}
+
+    Line(Point p, GLfloat dxx, GLfloat dyy) 
     {
-        cout << "Failed to initialize GLFW" << endl;
-        exit(1);
+        x = p.x;
+        y = p.y;
+
+        dx = dxx;
+        dy = dyy;
+
+        color[0] = p.color[0];
+        color[1] = p.color[1];
+        color[2] = p.color[2];
     }
 
-    window = glfwCreateWindow(640, 480, "Drawing", NULL, NULL);
-
-    if (window == NULL) //If window creation fails, NULL will be returned
+    ~Line() {}
+    
+    void draw() 
     {
-        cout << "Failed to create window" << endl;
-        glfwTerminate();
-        exit(1);
-    }
-
-    glfwMakeContextCurrent(window); //отображение рисунка
-    */
-    x = 0; y = 0;
-}
-
-point::point(float xx, float yy, float r, float g, float b)
-{
-    /*//Инициализируем библиотеку GLFW
-    if (glfwInit() == NULL)
-    {
-        cout << "Failed to initialize GLFW" << endl;
-        exit(1);
-    }
-
-    window = glfwCreateWindow(640, 480, "Drawing", NULL, NULL);
-
-    if (window == NULL) //If window creation fails, NULL will be returned
-    {
-        cout << "Failed to create window" << endl;
-        glfwTerminate();
-        exit(1);
-    }
-
-    glfwMakeContextCurrent(window); //отображение рисунка
-    */
-    x = xx; y = yy;
-    color[0] = r;
-    color[1] = g;
-    color[2] = b;
-}
-
-/*void point::draw()
-{
-    while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
-
-
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-}*/
-
-int main() 
-{
-    if (glfwInit() == NULL)
-    {
-        cout << "Failed to initialize GLFW" << endl;
-        exit(1);
-    }
-
-    GLFWwindow* window;
-
-    window = glfwCreateWindow(640, 480, "Drawing", NULL, NULL);
-
-    if (window == NULL) //If window creation fails, NULL will be returned
-    {
-        cout << "Failed to create window" << endl;
-        glfwTerminate();
-        exit(1);
-    }
-
-    point p;
-    point p1(0.12, 0.3, 1, 0, 0);
-
-    while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glColor3f(1, 0, 0);
-        glBegin(GL_POINTS);
-        glVertex2f(p.x, p.y);
-        glColor3f(1, 1, 0);
-        glVertex2f(p1.x, p1.y);
+        glColor3f(color[0], color[1], color[2]);
+        glBegin(GL_LINES);
+        glVertex2f(x, y);
+        glVertex2f(dx, dy);
         glEnd();
+    }
+    
+    void move(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy)
+    {
+        x = xx;
+        y = yy;
+        dx = dxx;
+        dy = dyy;
+    }
+
+    void rotate(GLfloat fi)
+    {
+        angle += fi;
+        glPushMatrix();
+        glTranslatef(x, x, 0.0f);
+        glRotatef(angle, 0.0f, 0.0f, 1.0f);
 
         glBegin(GL_LINES);
-        glVertex2f(-0.2, -0.2);
-        glVertex2f(0.2, -0.1);
+        glVertex2f(x, y);
+        glVertex2f(dx - x, dy - y);
         glEnd();
 
-        glfwMakeContextCurrent(window); //отображение рисунка
+        glPopMatrix();
+    }
+
+    void hide()
+    {
+        color[0], color[1], color[2] = 0.0f;
+    }
+};
+
+class Paral : public Line
+{
+public:
+    int angle;
+    Line a;
+    Line b;
+
+    Paral(Line l1, Line l2, int aangle)
+    {
+        a = l1;
+        b = l2;
+        angle = aangle;
+    }
+
+    void draw()
+    {
+        a.draw();
+        b.draw();
+    }
+};
+
+int main() {
+    GLFWwindow* window;
+
+    if (!glfwInit()) {
+        return -1;
+    }
+
+    window = glfwCreateWindow(800, 600, "Drawing shapes", NULL, NULL);
+    if (!window) {
+        glfwTerminate();
+        return -1;
+    }
+
+    glfwMakeContextCurrent(window);
+
+    while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT);
+        
+        Point p(0.0f,0.0f, 1,0,0);
+        p.draw();
+
+        Line l(p, 0.3f, 0.5f);
+        l.draw();
+        l.rotate(90);
+
+        Line l1(p, 0.45f, 0.6f);
+        //l1.draw();
+
+        Paral ppap(l,l1,45);
+        //ppap.draw();
 
         glfwSwapBuffers(window);
+
         glfwPollEvents();
     }
 
-    //point1.draw();
-    
-    //p.draw();
-
+    glfwTerminate();
 
     return 0;
 }
