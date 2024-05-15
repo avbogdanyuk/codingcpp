@@ -154,7 +154,7 @@ public:
     {
         a.draw();
         b.draw();
-        (-a).rotate(180 - angle);
+        (-a).rotate(180 + angle);
         (-b).rotate(180 - angle);
         /*
         a.draw();
