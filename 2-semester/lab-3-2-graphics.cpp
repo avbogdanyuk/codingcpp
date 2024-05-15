@@ -156,7 +156,7 @@ public:
     {
         //USING POINT, NOT LINES AND ROTATION
         glColor3f(color[0], color[1], color[2]);
-        glBegin(GL_POLYGON);
+        glBegin(GL_LINE_LOOP);
         glVertex2f(x, y);
         glVertex2f(x+dx, y+dy);
         glVertex2f(x+dx-dy,y+dy+dx)//to be continued...
