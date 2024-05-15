@@ -220,7 +220,7 @@ public:
 
     void draw()
     {
-        Paral pp(a, a, angle);
+        Paral pp(a, b, angle);
         pp.draw();
     }
 };
@@ -236,7 +236,7 @@ public:
 
     void draw()
     {
-        Paral pp(a,a,90);
+        Paral pp(a,b,90);
         pp.draw();
     }
 };
