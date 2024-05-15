@@ -214,7 +214,8 @@ public:
 
     Rhombus(Line l1, GLfloat aangle)
     {
-        a = b = l1; angle = aangle;
+        a = l1; angle = aangle;
+        b = a.nangle(angle);
     }
 
     void draw()
@@ -229,7 +230,8 @@ class Square : public Paral
 public:
     Square(Line l1)
     {
-        a = b = l1; angle = 90;
+        a = l1; angle = 90;
+        b = a.nangle(angle);
     }
 
     void draw()
