@@ -5,10 +5,10 @@
 //Теперь не вертим ничего.
 
 class Point {
-public:
+protected:
     GLfloat x, y;
     GLfloat color[3]{1,1,1};
-
+public:
     Point() 
     {
         x, y = 0.0f;
@@ -26,7 +26,7 @@ public:
     void draw() //рисуем точку
     {
         glPointSize(5);
-        glColor3f(color[0], color[1], color[2]);
+        glColor3f(color[0;], color[1], color[2]);
         glBegin(GL_POINTS);
         glVertex2f(x, y);
         glEnd();
@@ -46,9 +46,9 @@ public:
 
 class Line : public Point
 {
-public:
+protected:
     GLfloat dx, dy;
-
+public:
     Line() 
     {
         x, y, dx, dy = 0;
@@ -66,7 +66,7 @@ public:
         color[0] = p.color[0];
         color[1] = p.color[1];
         color[2] = p.color[2];
-    }
+    };
 
     ~Line() {}
 
@@ -136,6 +136,68 @@ public:
     }
 };
 
+class Square : public Line
+{
+public:
+    Square(GLfloat xx,GLfloat yy,GLfloat dxx,GLfloat dyy,GLfloat r,GLfloat g,GLfloat b)
+    {
+     //WRITE IN BITCH   
+    }
+
+    Square(Point ppap, GLfloat dxx, GLfloat dyy)
+    {
+        //PLEASE DON'T GIVE UP
+    }
+
+    void draw()
+    {
+        //USING POINT, NOT LINES AND ROTATION
+    }
+};
+
+class Rectan : public Square
+{
+public:
+
+    Rectan()
+    {
+        Paral pp;
+    }
+
+    Rectan(Line l1, Line l2) //Paral(Line l1, Line l2, int aangle)
+    {
+        a = l1, b = l2, angle = 90;
+    }
+
+    void draw()
+    {
+        Paral pp(a ,b ,angle);
+        pp.draw();
+    }
+};
+
+class Rhombus : public Square
+{
+public:
+
+    Rhombus()
+    {
+        Paral pp;
+    }
+
+    Rhombus(Line l1, GLfloat aangle)
+    {
+        a = l1; angle = aangle;
+        b = a.nangle(angle);
+    }
+
+    void draw()
+    {
+        Paral pp(a, b, angle);
+        pp.draw();
+    }
+};
+
 class Paral : public Line //Параллелограм
 {
 public:
@@ -155,11 +217,12 @@ public:
 
     void draw() //рисуем паралелограмм
     {
+        
+        /*
         a.draw();
         b.draw();
         (-a).rotate(180 + angle);
         (-b).rotate(180 - angle);
-        /*
         a.draw();
         b.draw();
         Point p(a.dx, a.dy, a.color[0], a.color[1], a.color[2]);
@@ -182,65 +245,6 @@ public:
     void move(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy)
     {
         x = xx; y = yy; dx = dxx; dy = dyy;
-    }
-};
-
-class Rectan : public Paral
-{
-public:
-
-    Rectan()
-    {
-        Paral pp;
-    }
-
-    Rectan(Line l1, Line l2) //Paral(Line l1, Line l2, int aangle)
-    {
-        a = l1, b = l2, angle = 90;
-    }
-
-    void draw()
-    {
-        Paral pp(a ,b ,angle);
-        pp.draw();
-    }
-};
-
-class Rhombus : public Paral
-{
-public:
-
-    Rhombus()
-    {
-        Paral pp;
-    }
-
-    Rhombus(Line l1, GLfloat aangle)
-    {
-        a = l1; angle = aangle;
-        b = a.nangle(angle);
-    }
-
-    void draw()
-    {
-        Paral pp(a, b, angle);
-        pp.draw();
-    }
-};
-
-class Square : public Paral
-{
-public:
-    Square(Line l1)
-    {
-        a = l1; angle = 90;
-        b = a.nangle(angle);
-    }
-
-    void draw()
-    {
-        Paral pp(a,b,90);
-        pp.draw();
     }
 };
 
