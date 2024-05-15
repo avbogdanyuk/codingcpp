@@ -142,16 +142,25 @@ public:
     Square(GLfloat xx,GLfloat yy,GLfloat dxx,GLfloat dyy,GLfloat r,GLfloat g,GLfloat b)
     {
      //WRITE IN BITCH   
+        x=xx;y=yy;dx=dxx;dy=dyy;color[0]=r;color[1]=g;color[2]=b;
     }
 
     Square(Point ppap, GLfloat dxx, GLfloat dyy)
     {
         //PLEASE DON'T GIVE UP
+        x=ppap.x; y=ppap.y;dx=dxx;dy=dyy;
+        color[0]=ppap.color[0];color[1]=ppap.color[1];color[2]=ppap.color[2];
     }
 
     void draw()
     {
         //USING POINT, NOT LINES AND ROTATION
+        glColor3f(color[0], color[1], color[2]);
+        glBegin(GL_POLYGON);
+        glVertex2f(x, y);
+        glVertex2f(x+dx, y+dy);
+        glVertex2f(x+dx-dy,y+dy+dx)//to be continued...
+        glEnd();
     }
 };
 
