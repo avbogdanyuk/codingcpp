@@ -1,14 +1,11 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
-//Все херня, давай по новой
-//Обязательно РОМБОВИДНОЕ наследование (квадрат - ВИРТУАЛЬНЫЙ ромб и прямоугольник - паралелепипед)
-//Теперь не вертим ничего.
 
 class Point {
-protected:
+public:
     GLfloat x, y;
     GLfloat color[3]{1,1,1};
-public:
+
     Point() 
     {
         x, y = 0.0f;
@@ -25,8 +22,9 @@ public:
 
     void draw() //рисуем точку
     {
+        
         glPointSize(5);
-        glColor3f(color[0;], color[1], color[2]);
+        glColor3f(color[0], color[1], color[2]);
         glBegin(GL_POINTS);
         glVertex2f(x, y);
         glEnd();
@@ -46,9 +44,9 @@ public:
 
 class Line : public Point
 {
-protected:
-    GLfloat dx, dy;
 public:
+    GLfloat dx, dy;
+
     Line() 
     {
         x, y, dx, dy = 0;
@@ -66,31 +64,13 @@ public:
         color[0] = p.color[0];
         color[1] = p.color[1];
         color[2] = p.color[2];
-    };
+    }
 
     ~Line() {}
 
-    Line operator=(const Line& r) //оператор присваивания
-    {
-        x = r.x; y = r.x; dx = r.dx; dy = r.dy;
-        color[0] = r.color[0];
-        color[1] = r.color[1];
-        color[2] = r.color[2];
-
-        return *this;
-    }
-
-    Line operator-() //противоположная линия, вектор
-    {
-        GLfloat kx = x; GLfloat ky = y;
-        x = dx; y = dy;
-        dx = kx; dy = ky;
-
-        return *this;
-    }
-
     void draw() //рисуем линию
     {
+        
         glColor3f(color[0], color[1], color[2]);
         glBegin(GL_LINES);
         glVertex2f(x, y);
@@ -100,10 +80,7 @@ public:
 
     void move(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy) //двигаем линию, меняем координаты
     {
-        x = xx;
-        y = yy;
-        dx = dxx;
-        dy = dyy;
+        x += xx; y += yy; dx += dxx; dy += dyy;
     }
 
     void rotate(GLfloat fi) //рисуем повернутную линию на угол
@@ -111,7 +88,7 @@ public:
         glPushMatrix();
         glTranslatef(x, y, 0.0f);
         glRotatef(fi, x, y, 1.0f);
-
+        glColor3f(color[0], color[1], color[2]);
         glBegin(GL_LINES);
         glVertex2f(x, y);
         glVertex2f(dx - x, dy - y);
@@ -136,126 +113,193 @@ public:
     }
 };
 
-class Square : public Line
-{
-public:
-    Square(GLfloat xx,GLfloat yy,GLfloat dxx,GLfloat dyy,GLfloat r,GLfloat g,GLfloat b)
-    {
-     //WRITE IN BITCH   
-        x=xx;y=yy;dx=dxx;dy=dyy;color[0]=r;color[1]=g;color[2]=b;
-    }
-
-    Square(Point ppap, GLfloat dxx, GLfloat dyy)
-    {
-        //PLEASE DON'T GIVE UP
-        x=ppap.x; y=ppap.y;dx=dxx;dy=dyy;
-        color[0]=ppap.color[0];color[1]=ppap.color[1];color[2]=ppap.color[2];
-    }
-
-    void draw()
-    {
-        //USING POINT, NOT LINES AND ROTATION
-        glColor3f(color[0], color[1], color[2]);
-        glBegin(GL_LINE_LOOP);
-        glVertex2f(x, y);
-        glVertex2f(x+dx, y+dy);
-        glVertex2f(x+dx-dy,y+dy+dx)//to be continued...
-        glEnd();
-    }
-};
-
-class Rectan : public Square
+class Square : public Line //Квадрат
 {
 public:
 
-    Rectan()
+    Square() 
     {
-        Paral pp;
+        x, y, dx, dy = 0;
     }
 
-    Rectan(Line l1, Line l2) //Paral(Line l1, Line l2, int aangle)
+    Square(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat r, GLfloat g, GLfloat b) //по двум линиям и углу
     {
-        a = l1, b = l2, angle = 90;
-    }
-
-    void draw()
-    {
-        Paral pp(a ,b ,angle);
-        pp.draw();
-    }
-};
-
-class Rhombus : public Square
-{
-public:
-
-    Rhombus()
-    {
-        Paral pp;
-    }
-
-    Rhombus(Line l1, GLfloat aangle)
-    {
-        a = l1; angle = aangle;
-        b = a.nangle(angle);
-    }
-
-    void draw()
-    {
-        Paral pp(a, b, angle);
-        pp.draw();
-    }
-};
-
-class Paral : public Line //Параллелограм
-{
-public:
-    Line a, b;
-    int angle;
-
-    Paral() 
-    {
-        Line l1, l2;
-        a = l1; b = l2; angle = 0;
-    }
-
-    Paral(Line l1, Line l2, int aa) //по двум линиям и углу
-    {
-        a = l1; b = l2; angle = aa;
+        x = xx; y = yy; dx = dxx; dy = dyy;
+        color[0] = r; color[1] = g; color[2] = b;
     }
 
     void draw() //рисуем паралелограмм
     {
         
-        /*
-        a.draw();
-        b.draw();
-        (-a).rotate(180 + angle);
-        (-b).rotate(180 - angle);
-        a.draw();
-        b.draw();
-        Point p(a.dx, a.dy, a.color[0], a.color[1], a.color[2]);
-        Line c(p, a.dx+b.dx, a.dy+b.dy);
-        c.draw();
-        Point p1(b.dx, b.dy, b.color[0], b.color[1], b.color[2]);
-        Line d(p1, a.dx + b.dx, a.dy + b.dy);
-        d.draw();
-        */
+        glColor3f(color[0], color[1], color[2]);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(x, y);
+        glVertex2f(x + dx, y + dy);
+        glVertex2f(x + dx - dy, y + dy + dx);
+        glVertex2f(x - dy, y + dx);
+        glEnd();
     }
 
-    void hide()
+    void rotate(GLfloat fi)
     {
-        a.hide();
-        b.hide();
-        (-a).hide();
-        (-b).hide();
-    }
-
-    void move(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy)
-    {
-        x = xx; y = yy; dx = dxx; dy = dyy;
+        
+        glPushMatrix();
+        glRotatef(fi, 0, 0, 1);
+        glColor3f(color[0], color[1], color[2]);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(x, y);
+        glVertex2f(x + dx, y + dy);
+        glVertex2f(x + dx - dy, y + dy + dx);
+        glVertex2f(x - dy, y + dx);
+        glEnd();
+        glPopMatrix();
     }
 };
+
+class Rect : virtual public Square //Прямоугольник
+{
+public:
+
+    GLfloat hx, vx = 1; //horizontal and vertical ENLARGEMENT...of square
+
+    Rect() : Square() {}
+
+    Rect(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat hhx, GLfloat vvx, GLfloat r, GLfloat g, GLfloat b)
+    {
+        x = xx; y = yy; dx = dxx; dy = dyy;
+        color[0] = r; color[1] = g; color[2] = b;
+        hx = hhx; vx = vvx;
+    }
+
+    void draw()
+    {
+        
+        glColor3f(color[0], color[1], color[2]);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(x, y);
+        glVertex2f(x + hx * dx, y + hx * dy);
+        glVertex2f(x + hx * dx - vx * dy, y + hx * dy + vx * dx);
+        glVertex2f(x - vx * dy, y + vx * dx);
+        glEnd();
+    }
+
+    void rotate(GLfloat fi)
+    {
+        
+        glPushMatrix();
+        glRotatef(fi, 0, 0, 1);
+        glColor3f(color[0], color[1], color[2]);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(x + hx * dx, y + hx * dy);
+        glVertex2f(x + hx * dx - vx * dy, y + hx * dy + vx * dx);
+        glVertex2f(x - vx * dy, y + vx * dx);
+        glEnd();
+        glPopMatrix();
+    }
+};
+
+class Rhomb : virtual public Square
+{
+public:
+    GLfloat fi;
+    GLfloat pi = 3.14f;
+    GLfloat len, xi; //что это...
+
+    Rhomb() : Square() {}
+
+    Rhomb(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat ffi, GLfloat r, GLfloat g, GLfloat b)
+    {
+        x = xx; y = yy; dx = dxx; dy = dyy;
+        color[0] = r; color[1] = g; color[2] = b;
+        fi = ffi; len = sqrt(dx * dx + dy * dy);
+        xi = int(asin(dy / len) * 180 / pi);
+    }
+
+    ~Rhomb() {}
+
+    void draw()
+    {
+        if (fi == 90)
+        {
+            Square tmp(x, y, dx, dy, color[0], color[1], color[2]);
+            tmp.draw();
+        }
+        else
+        {
+            GLfloat dxx = GLfloat((len * cos((xi + 180 - fi) * pi / 180)));
+            GLfloat dyy = GLfloat((len * sin((xi + 180 - fi) * pi / 180)) + 1);
+
+            glColor3f(color[0], color[1], color[2]);
+            glBegin(GL_LINE_LOOP);
+            glVertex2f(x, y);
+            glVertex2f(x + dx, y + dy);
+            glVertex2f(x + dx + dxx, y + dy + dyy);
+            glVertex2f(x + dxx, y + dyy);
+            glEnd();
+        }
+    }
+
+    void rotate(GLfloat fifi)
+    {
+        GLfloat dxx = GLfloat((len * cos((xi + 180 - fi) * pi / 180)));
+        GLfloat dyy = GLfloat((len * sin((xi + 180 - fi) * pi / 180)) + 1);
+        glPushMatrix();
+        glRotatef(fifi, 0, 0, 1);
+        glColor3f(color[0], color[1], color[2]);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(x, y);
+        glVertex2f(x + dx, y + dy);
+        glVertex2f(x + dx + dxx, y + dy + dyy);
+        glVertex2f(x + dxx, y + dyy);
+        glEnd();
+        glPopMatrix();
+    }
+};
+
+class Paral : public Rect, public Rhomb
+{
+public:
+    Paral() : Square() {}
+
+    Paral(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat ffi, GLfloat hhx, GLfloat vvx, GLfloat r, GLfloat g, GLfloat b)
+    {
+        x = xx; y = yy; dx = dxx; dy = dyy;
+        color[0] = r; color[1] = g; color[2] = b;
+        vx = vvx; hx = hhx;
+        fi = ffi; len = sqrt(dx * dx + dy * dy);
+        xi = int(asin(dy / len) * 180 / pi);
+    }
+
+    void draw()
+    {
+        if (fi == 90)
+        {
+            Rect racoon(x, y, dx, dy, hx, vx, color[0], color[1], color[2]);
+            racoon.draw();
+        }
+        else
+        {
+            if (hx = vx = 1)
+            {
+                Rhomb rural(x, y, dx, dy, fi, color[0], color[1], color[2]);
+                rural.draw();
+            }
+            else
+            {
+                int dxx = int((len * cos((xi + 180 - fi) * pi / 180)));//можно поиграться с модулем
+                int dyy = int((len * sin((xi + 180 - fi) * pi / 180)) + 1);
+                glColor3f(color[0], color[1], color[2]);
+                glBegin(GL_LINE_LOOP);
+                glVertex2f(x, y);
+                glVertex2f(x + hx * dx, y + hx * dy);
+                glVertex2f(x + hx * dx + vx * dxx, y + hx * dy + vx * dyy);
+                glVertex2f(x + vx * dxx, y + vx * dyy);
+                glEnd();
+            }
+        }
+    }
+};
+
 
 int main() {
     GLFWwindow* window;
@@ -273,20 +317,29 @@ int main() {
     glfwMakeContextCurrent(window);
 
     while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
+        
 
+        //Точка
         Point p(0.0f, 0.0f, 1, 0, 0);
         p.draw();
-
+        //Линия
         Line l(p, 0.6f, 0.5f);
-        //(-l).draw();
-        //l.draw();
-
-        Line l1(p, 0.45f, 0.6f);
-        //l1.draw();
-
-        Paral ppap(l,l1,45);
+        l.draw();
+        //Квадрат
+        Square ppap(0.0f, 0.0f,0.1f,0.3f,0.0f,1.0f,0.0f);
         ppap.draw();
+        ppap.rotate(20);
+        //Прямоугольник
+        Rect hello(0.0f, 0.5f, 0.1f, -0.2f, 0.6f, 1.0f, 0.0f, 0.0f, 1.0f);
+        hello.draw();
+        hello.move(0.5f, 0.0f, 0.0f, 0.5f);
+        hello.draw();
+        //Ромб
+        Rhomb rumba(-0.3f, 0.3f, -0.5f, -0.3f, 120, 0.5f, 0.5f, 1.0f);
+        rumba.draw();
+        //Паралеллограмм
+        Paral pupa(-0.3f, 0.5f, -0.1f, -0.3f, 90.0f, 0.6f, 1.0f, 1.5f, 2.5f, 0.0f);
+        pupa.draw();
 
         glfwSwapBuffers(window);
 
