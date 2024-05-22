@@ -47,9 +47,9 @@ class Line : public Point
 public:
     GLfloat dx, dy;
 
-    Line() 
+    Line() : Point()
     {
-        x, y, dx, dy = 0;
+        dx, dy = 0;
         color[0], color[1], color[2] = 1;
     }
 
@@ -84,7 +84,7 @@ public:
         glEnd();
     }
 
-    void move(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy) //двигаем линию, меняем координаты
+    void move(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy)//двигаем линию, меняем координаты
     {
         x += xx; y += yy; dx += dxx; dy += dyy;
     }
@@ -123,16 +123,9 @@ class Square : public Line //Квадрат
 {
 public:
 
-    Square() 
-    {
-        x, y, dx, dy = 0;
-    }
+    Square() : Line() {}
 
-    Square(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat r, GLfloat g, GLfloat b) //по двум линиям и углу
-    {
-        x = xx; y = yy; dx = dxx; dy = dyy;
-        color[0] = r; color[1] = g; color[2] = b;
-    }
+    Square(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat r, GLfloat g, GLfloat b) : Line(xx,yy,dxx,dyy,r,g,b) {}
 
     void draw() //рисуем паралелограмм
     {
@@ -170,10 +163,8 @@ public:
 
     Rect() : Square() {}
 
-    Rect(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat hhx, GLfloat vvx, GLfloat r, GLfloat g, GLfloat b)
+    Rect(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat hhx, GLfloat vvx, GLfloat r, GLfloat g, GLfloat b) : Square(xx,yy,dxx,dyy,r,g,b)
     {
-        x = xx; y = yy; dx = dxx; dy = dyy;
-        color[0] = r; color[1] = g; color[2] = b;
         hx = hhx; vx = vvx;
     }
 
@@ -213,10 +204,8 @@ public:
 
     Rhomb() : Square() {}
 
-    Rhomb(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat ffi, GLfloat r, GLfloat g, GLfloat b)
+    Rhomb(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat ffi, GLfloat r, GLfloat g, GLfloat b) : Square(xx,yy,dxx,dyy,r,g,b)
     {
-        x = xx; y = yy; dx = dxx; dy = dyy;
-        color[0] = r; color[1] = g; color[2] = b;
         fi = ffi; len = sqrt(dx * dx + dy * dy);
         xi = int(asin(dy / len) * 180 / pi);
     }
@@ -267,10 +256,8 @@ class Paral : public Rect, public Rhomb
 public:
     Paral() : Square() {}
 
-    Paral(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat ffi, GLfloat hhx, GLfloat vvx, GLfloat r, GLfloat g, GLfloat b)
+    Paral(GLfloat xx, GLfloat yy, GLfloat dxx, GLfloat dyy, GLfloat ffi, GLfloat hhx, GLfloat vvx, GLfloat r, GLfloat g, GLfloat b) : Square(xx,yy,dxx,dyy,r,g,b)
     {
-        x = xx; y = yy; dx = dxx; dy = dyy;
-        color[0] = r; color[1] = g; color[2] = b;
         vx = vvx; hx = hhx;
         fi = ffi; len = sqrt(dx * dx + dy * dy);
         xi = int(asin(dy / len) * 180 / pi);
