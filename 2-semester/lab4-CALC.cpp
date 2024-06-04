@@ -381,21 +381,19 @@ vect matr::operator*(vect& r)
 }
 
 int main()
-{
+{   
     setlocale(LC_ALL, "Russian");
-    
-    const int size = 2; //размерности матрица и вектор aka кол-во уравнений в системе
+
+    const int size = 4; //кол-во уравнений в системе
     matr A(size); //матрица A содержит коэффициенты переменных в уравнениях
-    vect D(size); //диагональ матрицы A
     double b[size]{};
-    double dd[size]{};
 
     for (int i = 1; i <= size; i++)
         for (int j = 1; j <= size; j++)
         {
-            A.a[index(size, i, j)] = (rand() % 10); // v1 in the range 0 to 9
+            A.a[index(size, i, j)] = (rand() % 100); // v1 in the range 0 to 99
 
-            if (index(size, i, j) % (size + 1) == 0) A.a[index(size, i, j)] = (rand() % 10 + 1) * 100; // v1 in the range 1 to 10
+            if (index(size, i, j) % (size + 1) == 0) A.a[index(size, i, j)] = (rand() % 100 + 1) * 100; // v1 in the range 1 to 100
         }
    
     A.print();
@@ -403,19 +401,11 @@ int main()
     //заполняем b рандомными элементами
     for (int i = 0; i < size; i++)
     {
-        b[i] = (rand() % 10); // v1 in the range 0 to 9
+        b[i] = (rand() % 100); // v1 in the range 0 to 99
     }
 
-    vect B(size, b); //вектор B содержит правую часть уравнения, т.е. просто константа
+    vect B(size, b); //вектор B содержит правую часть уравнения
     B.print();
-
-    for (int i = 1; i <= size; i++)
-        for (int j = 1; j <= size; j++)
-        {
-            if (index(size, i, j) % (size + 1) == 0) D.v[i-1] = A.a[index(size, i, j)];
-        }
-
-    D.print();
 
     vect X(size); //ответ. корни
     X.print();
